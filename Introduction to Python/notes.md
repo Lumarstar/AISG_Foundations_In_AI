@@ -177,3 +177,46 @@ For example,
         "the correct answer to this multiple choice exercise is answer number " + 2
       TypeError: can only concatenate str (not "int") to str
 ```
+
+## Python Lists
+
+A list is a **data structure**. It can be declared like so:
+```python
+  my_list = ['a', 1, -0.5, False, ['hello', 'world']]
+```
+The variable `my_list` refers to the declared list. A list is a way to give a single name to a collection of values. 
+These values, or elements, can have any type; they can be floats, integers, booleans, or strings, 
+but also more advanced Python types, even lists (lists within lists are called "sublists"). It is therefore a **compound data type**.
+
+### Creating lists
+
+Lists are declared with a set of square brackets `[]`. Other than just including "pure" values, variables can also be used as
+part of the declaration.
+```python
+  a = "is"
+  b = "nice"
+
+  # variables can also be used to declare a list!
+  # the value in the list will refer to the value of the variable
+  my_list = ["my", "list", a, b]
+
+  # empty lists are fine too! declare them like so:
+  empty_list = []
+```
+
+### `list()` type
+
+A list is also a Python data type. A new (empty) list can also be declared like this:
+```python
+  my_empty_list = list()
+```
+
+To see the type of a list, we simply use the `type()` function:
+```python
+  type(my_empty_list)
+  type(my_list)
+```
+```console
+  list
+  list
+```

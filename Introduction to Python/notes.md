@@ -204,6 +204,14 @@ part of the declaration.
   empty_list = []
 ```
 
+Printing `my_list` here gives:
+```python
+  print(my_list)
+```
+```console
+  > ["my", "list", "is", "nice"]
+```
+
 ### `list()` type
 
 A list is also a Python data type. A new (empty) list can also be declared like this:

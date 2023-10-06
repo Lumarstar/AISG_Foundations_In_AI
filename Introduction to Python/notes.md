@@ -202,6 +202,9 @@ part of the declaration.
 
   # empty lists are fine too! declare them like so:
   empty_list = []
+
+  # generic list syntax
+  generic_list = [el1, el2, el3]
 ```
 
 Printing `my_list` here gives:

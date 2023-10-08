@@ -318,7 +318,7 @@ contain the updated value(s).
 
 #### Adding elements
 
-The `+` operator pastes the contents of two lists together. Here is an example to illustrate that:
+The `+` operator pastes the contents of two lists together. This is called "extending a list". Here is an example to illustrate that:
 ```python
   list_one = ['a', 'b']
   list_two = ['c', 'd']
@@ -339,6 +339,12 @@ The `del()` function removes elements from the list at a specified index. To do 
   del(list_name[index])
 ```
 This will cause the elements in subsequent indices to move one index to the left to "fill up the gap".
+
+We can also remove elements via slicing too, like so:
+```python
+  del(list_name[start:end])
+```
+This will remove all elements starting from index `start` to index `end-1`.
 
 ### `list()` type
 

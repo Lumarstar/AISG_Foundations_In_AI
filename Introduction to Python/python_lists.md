@@ -8,7 +8,7 @@ The variable `my_list` refers to the declared list. A list is a way to give a si
 These values, or elements, can have any type; they can be floats, integers, booleans, or strings, 
 but also more advanced Python types, even lists (lists within lists are called "sublists"). It is therefore a **compound data type**.
 
-### Creating lists
+## Creating lists
 
 Lists are declared with a set of square brackets `[]`. Other than just including "pure" values, variables can also be used as
 part of the declaration.

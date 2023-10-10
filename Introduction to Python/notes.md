@@ -511,4 +511,103 @@ Meaning, if we did not specify, Python will assume that we meant `key=True`, not
 Methods can be seen as "functions that belong to objects". What is an object? A few examples of objects are strings, floats and lists. Each object
 has methods that are unique to their type.
 
+- some objects will have methods with the same name, but they have different behaviours.
+- some methods can change the object they are called on
+
 #### List Methods
+
+##### 1. `.index()`
+
+This method gets us the (first) index of the value that matches the argument. Take this scenario as an example:
+```python
+  fam = ['liz', 1.73, 'emma', 1.68, 'mom', 1.71, 'dad', 1.89]
+  fam.index("mom")    # call method `index()` on fam
+```
+```console
+  > 4
+```
+
+##### 2. `.count()`
+
+This method returns the number of time a value appears in the list. Take this scenario as an example:
+```python
+  fam = ['liz', 1.73, 'emma', 1.68, 'mom', 1.71, 'dad', 1.89]
+  fam.count("mom")    # call method `count()` on fam
+```
+```console
+  > 1
+```
+
+##### 3. `.append()`
+
+Appends/Adds a new element to the end of the list.
+```python
+  list_name.append(new_element)
+```
+
+##### 4. `.remove()`
+
+Removes the first element of a list that matches the input. For example,
+```python
+  my_list = [0, 1, 2, 4, 6, 0]
+  my_list.remove(1)    # removes element at index 1
+  print(my_list)
+
+  my_list.remove(0)    # removes the first instance of 0 at index 0
+  print(my_list)
+```
+```console
+  > [0, 2, 4, 6, 0]
+  > [2, 4, 6, 0]
+```
+
+##### 5. `.reverse()`
+
+Reverses the list in-place. This method modifies the list. For example,
+```python
+  my_list = [0, 1, 2, 4, 6, 0]
+  my_list.reverse()
+  print(my_list)
+```
+```console
+  > [0, 6, 4, 2, 1, 0]
+```
+
+#### String Methods
+
+##### 1. `.capitalise()`
+
+This method returns the original string, but with only the first letter capitalised. See this example:
+```python
+  string_name = "hello WORLD!"
+  string_name.capitalise()
+```
+```console
+  > Hello world!
+```
+
+##### 2. `.replace()`
+
+This method replaces all instances of specified old values of the string with new values. See this example:
+```python
+  sister = "Liz"
+  sister.replace("z", "sa")    # string_name.replace(old_substr, new_substr)
+  print(sister)
+```
+```console
+  > Lisa
+```
+
+##### 3. `.upper()`
+
+Returns an entirely capitalised version of the string, but does not modify the original string.
+```python
+  str_name.upper()
+```
+
+##### 4. `.count()`
+
+Similar to the list method `.count()`, the string method `count()` returns the number of occurrences of a specific substring in the string.
+```python
+  str_name.count(substr)
+```

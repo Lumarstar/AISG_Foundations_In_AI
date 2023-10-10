@@ -207,3 +207,49 @@ Similar to the list method `.count()`, the string method `count()` returns the n
 ```python
   str_name.count(substr)
 ```
+
+## Packages
+
+Packages are directories of Python scripts, where each script is a module. These modules specify functions, methods and 
+new Python types aimed at solving particular problems.
+
+### Installing Packages
+
+However, not all packages are available in Python by default. We have to install the packages we want to use. One way to do this is to use
+`pip`, a package maintenance system for Python. These steps will help you configure `pip`:
+
+1. Download the `get-pip.py` script from [this link](https://bootstrap.pypa.io/get-pip.py).
+2. Open a terminal/command prompt, `cd` (change directory) to the folder containing the `get-pip.py` file and run:
+```console
+  C:>  py get-pip.py
+```
+
+To install packages, go to their respective installation guides for more detailed help, but generally, it entails you running the `install`
+command using `pip`:
+```console
+  > pip3 install <package name>
+```
+Here, `pip3` is to specify we are using Python3.
+
+### Importing Packages
+
+Use the `import` keyword in Python to import packages and modules, like so:
+```python
+  import <package>                  # this imports the entire package
+  import <package> as <alias>       # this also imports the entire package, but we refer to it by its alias now
+
+  # WARNING: THIS WAY OF IMPORTING IS LESS PREFERRED AS THE IMPORTED MODULE IS REFERENCED DIRECTLY
+  #          MAKING IT MORE AMBIGUOUS WHICH PACKAGE IT COMES FROM 
+  from <package> import <module>    # this imports only the specific module
+  from <package> import *           # this imports all the modules from the package
+```
+Here you go, have some examples of this being applied!
+```python
+  # we use numpy to illustrate importing the entire package
+  import numpy
+  import numpy as np
+
+  # we use the `math` package here to illustrate importing certain modules
+  from math import pi
+  from math import *
+```

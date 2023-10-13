@@ -64,7 +64,7 @@ But after converting the lists into numpy arrays, if we perform the same calcula
 ```
 
 There are still a few things to note:
-- NumPy assumes that its arrays only contain one type. If there is more than one type, the resulting Numpy array will **contain only a single type**.
+- NumPy assumes that its arrays only contain one type. If there is more than one type, the resulting Numpy array will **contain only a single type**. This is known as **type coersion**.
 ```python
   np.array([1.0, "is", True])
 ```

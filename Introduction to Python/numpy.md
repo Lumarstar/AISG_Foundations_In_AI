@@ -124,5 +124,21 @@ This is nothing new! It still is a regular data structure. Now using the `.shape
 
 For these N-D arrays, the arrays can still only contain a single type!
 
+**Note:** To access methods, we have round brackets at the end `()`, but we don't use them when accessing attributes
+
 ### Subsetting multi-dimensional arrays
 
+The normal vanilla subsetting used with Python N-D arrays work perfectly fine here. But! We can also do more advanced stuff too!
+
+Say for instance, we want to access the element at the 1st row and the 3rd column. Here are two ways we can do this:
+```python
+  my_np_arr[0][2]    # the normal way
+  my_np_arr[0, 2]    # using commas! [row, col]
+```
+
+We can do this as well:
+```python
+  my_np_arr[:, 1:3]    # using colons to access values by slicing works too!
+```
+
+This comma method finds the intersection of the specified row(s) and column(s), and thus provides more flexibility.

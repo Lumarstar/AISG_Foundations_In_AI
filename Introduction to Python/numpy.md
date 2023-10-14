@@ -103,3 +103,26 @@ This too is subsetting! This will select elements with a corresponding boolean v
 ```console
   array([24.7473475])
 ```
+
+## 2D (and other multi-dimensional) NumPy Arrays
+
+Just like with Python lists, we can also create multi-dimensional arrays in NumPy! Say for instance, we have a 2D Python List, and we use that to create our 2D NumPy array:
+```python
+  np_2d = numpy.array([[1.73, 1.68, 1.71, 1.89, 1.79], [65.4, 59.2, 63.6, 88.4, 68.7]])
+  np_2d
+```
+```console
+  array([[1.73, 1.68, 1.71, 1.89, 1.79], [65.4, 59.2, 63.6, 88.4, 68.7]])
+```
+This is nothing new! It still is a regular data structure. Now using the `.shape` attribute, we can see how many rows and columns `np_2d` has!
+```python
+  np_2d.shape
+```
+```console
+  > (2, 5)    # 2 rows, 5 columns
+```
+
+For these N-D arrays, the arrays can still only contain a single type!
+
+### Subsetting multi-dimensional arrays
+

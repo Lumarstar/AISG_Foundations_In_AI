@@ -142,3 +142,35 @@ We can do this as well:
 ```
 
 This comma method finds the intersection of the specified row(s) and column(s), and thus provides more flexibility.
+
+### Arithmetic
+
+Similar to 1D NumPy arrays, we can combine numbers, vectors (ie 1D arrays) and even matrices (2D and above) with other matrices! We show an example here:
+```python
+  import numpy as np
+  np_mat = np.array([[1, 2],
+                     [3, 4],
+                     [5, 6]])
+  np_mat * 2
+  np_mat + np.array([10, 10])
+  np_mat + np_mat
+  np_mat + 2
+```
+As you can see below, if we use single numbers or vectors, they will be applied to all the elements in the matrix accordingly.
+```console
+  > array([[2, 4],
+           [6, 8],
+           [10, 12]])
+
+  > array([[11, 12],
+           [13, 14],
+           [15, 16]])
+
+  > array([[2, 4],
+           [6, 8],
+           [10, 12]])
+
+  > array([[3, 4],
+           [5, 6],
+           [7, 8]])
+```

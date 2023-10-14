@@ -151,9 +151,9 @@ Similar to 1D NumPy arrays, we can combine numbers, vectors (ie 1D arrays) and e
   np_mat = np.array([[1, 2],
                      [3, 4],
                      [5, 6]])
-  np_mat * 2
-  np_mat + np.array([10, 10])
-  np_mat + np_mat
+  np_mat * 2    # single number
+  np_mat + np.array([10, 10])    # vector
+  np_mat + np_mat    # matrix
   np_mat + 2
 ```
 As you can see below, if we use single numbers or vectors, they will be applied to all the elements in the matrix accordingly.

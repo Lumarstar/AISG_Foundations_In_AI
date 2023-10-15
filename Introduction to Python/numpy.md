@@ -183,9 +183,27 @@ We need ways to visualise large amounts of data! Because NumPy enforces single t
 
 This NumPy function, when given a NumPy array, will return the mean of all values.
 
+```python
+  import numpy as np
+  x = [1, 4, 8, 10, 12]
+  np.mean(x)
+```
+```console
+  > 7.0
+```
+
 ### 2. `np.median()`
 
 This NumPy function, when given a NumPy array, will return the median value.
+
+```python
+  import numpy as np
+  x = [1, 4, 8, 10, 12]
+  np.median(x)
+```
+```console
+  > 8.0
+```
 
 ### 3. `np.corrcoef()`
 

@@ -174,3 +174,41 @@ As you can see below, if we use single numbers or vectors, they will be applied 
            [5, 6],
            [7, 8]])
 ```
+
+## NumPy and Statistics
+
+We need ways to visualise large amounts of data! Because NumPy enforces single types within its data structures, it is a lot faster than normal Python functions! NumPy can help us in such ways:
+
+### 1. `np.mean()`
+
+This NumPy function, when given a NumPy array, will return the mean of all values.
+
+### 2. `np.median()`
+
+This NumPy function, when given a NumPy array, will return the median value.
+
+### 3. `np.corrcoef()`
+
+This NumPy function takes in two series, and sees whether they are related.
+
+### 4. `np.std()`
+
+This NumPy function, when given a series, returns the standard deviation of the series.
+
+### 5. `np.sum()`
+
+As the name suggests, this returns the sum of all the elements in the iterable.
+
+### 6. `np.sort()`
+
+As the name suggests, this sorts an iterable!
+
+### 7. `np.random.normal()`
+
+This function takes in three arguments:
+
+- Distribution Mean
+- Distribution Standard Deviation
+- Number of samples
+
+and churns out random values based on these inputs!

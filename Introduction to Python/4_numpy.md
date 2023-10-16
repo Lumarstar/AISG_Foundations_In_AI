@@ -64,7 +64,8 @@ But after converting the lists into numpy arrays, if we perform the same calcula
 ```
 
 There are still a few things to note:
-- NumPy assumes that its arrays only contain one type. If there is more than one type, the resulting Numpy array will **contain only a single type**. This is known as **type coersion**.
+- NumPy assumes that its arrays only contain one type. If there is more than one type, the resulting Numpy array 
+will **contain only a single type**. This is known as **type coersion**.
 ```python
   np.array([1.0, "is", True])
 ```
@@ -106,7 +107,8 @@ This too is subsetting! This will select elements with a corresponding boolean v
 
 ## 2D (and other multi-dimensional) NumPy Arrays
 
-Just like with Python lists, we can also create multi-dimensional arrays in NumPy! Say for instance, we have a 2D Python List, and we use that to create our 2D NumPy array:
+Just like with Python lists, we can also create multi-dimensional arrays in NumPy! Say for instance, we have a 2D Python List, 
+and we use that to create our 2D NumPy array:
 ```python
   np_2d = numpy.array([[1.73, 1.68, 1.71, 1.89, 1.79], [65.4, 59.2, 63.6, 88.4, 68.7]])
   np_2d
@@ -145,7 +147,8 @@ This comma method finds the intersection of the specified row(s) and column(s), 
 
 ### Arithmetic
 
-Similar to 1D NumPy arrays, we can combine numbers, vectors (ie 1D arrays) and even matrices (2D and above) with other matrices! We show an example here:
+Similar to 1D NumPy arrays, we can combine numbers, vectors (ie 1D arrays) and even matrices (2D and above) with other 
+matrices! We show an example here:
 ```python
   import numpy as np
   np_mat = np.array([[1, 2],
@@ -177,7 +180,8 @@ As you can see below, if we use single numbers or vectors, they will be applied 
 
 ## NumPy and Statistics
 
-We need ways to visualise large amounts of data! Because NumPy enforces single types within its data structures, it is a lot faster than normal Python functions! NumPy can help us in such ways:
+We need ways to visualise large amounts of data! Because NumPy enforces single types within its data structures, 
+it is a lot faster than normal Python functions! NumPy can help us in such ways:
 
 ### 1. `np.mean()`
 
@@ -207,7 +211,7 @@ This NumPy function, when given a NumPy array, will return the median value.
 
 ### 3. `np.corrcoef()`
 
-This NumPy function takes in two series, and sees whether they are related.
+This NumPy function takes in two series and sees whether they are related.
 
 ### 4. `np.std()`
 
@@ -230,3 +234,57 @@ This function takes in three arguments:
 - Number of samples
 
 and churns out random values based on these inputs!
+
+## Example Task
+
+### Task Description
+
+You've contacted FIFA for some data and they handed you two lists. The lists are the following:
+```python
+  positions = ['GK', 'M', 'A', 'D', ...]
+  heights = [191, 184, 185, 180, ...]
+```
+
+Each element in the lists corresponds to a player. The first list, `positions`, contains strings representing each player's position. 
+The possible positions are: 'GK' (goalkeeper), 'M' (midfield), 'A' (attack) and 'D' (defense). The second list, `heights`, 
+contains integers representing the height of the player in cm. The first player in the list is a goalkeeper and is pretty tall (191 cm).
+
+You're fairly confident that the median height of goalkeepers is higher than that of other players on the soccer field. 
+Some of your friends don't believe you, so you are determined to show them using the data you received from FIFA and your newly 
+acquired Python skills.
+
+Assume that `height` and `positions` are available as lists.
+
+### Your task
+
+- Convert `heights` and `positions`, which are regular lists, to numpy arrays. Call them `np_heights` and `np_positions`.
+- Extract all the heights of the goalkeepers. You can use a little trick here: use `np_positions == 'GK'` as an index for `np_heights`. 
+Assign the result to `gk_heights`.
+- Extract all the heights of all the other players. This time use `np_positions != 'GK'` as an index for np_heights.
+Assign the result to `other_heights`.
+- Print out the median height of the goalkeepers using `np.median()`.
+- Do the same for the other players. Print out their median height.
+
+### Solution
+
+```python
+  import numpy as np
+
+  np_heights = np.array(heights)
+  np_positions = np.array(positions)
+
+  gk_heights = np_heights[np_positions == 'GK']
+  other_heights = np_heights[np_positions != 'GK']
+
+  print("Median height of goalkeepers: " + str(np.median(gk_heights)))
+  print("Median height of other players: " + str(np.median(other_heights)))
+```
+
+```console
+  Median height of goalkeepers: 188.0
+  Median height of other players: 181.0
+```
+
+The reason why `np_positions == 'GK'` worked is that each index in `heights` and `positions` corresponds to the same player.
+This means that in the boolean array `np_positions == 'GK'`, all the indices with `True` will correspond to a goalkeeper, even
+in the array `heights`.

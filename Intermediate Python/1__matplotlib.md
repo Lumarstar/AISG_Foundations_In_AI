@@ -79,6 +79,13 @@ first go through the logarithmic function, then be plotted. So rather than plott
 
 What Python will do here is to plot the data points only.
 
+### Miscellaneous functions
+
+Matplotlib is an incredibly useful library! Here are some useful functions that will
+likely help with data visualisation:
+
+1. `plt.clf()`: cleans up the existing plot so we can start afresh with plots.
+
 ## Histogram
 
 Histograms are visualisations that are useful for exploring datasets. It gives an idea

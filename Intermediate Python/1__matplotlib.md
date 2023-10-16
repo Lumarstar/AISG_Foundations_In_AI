@@ -92,9 +92,9 @@ To use Matplotlib to plot histograms, we follow these steps:
   plt.hist(x[, bins])
 ```
 `x` is the list of values we want to build a histogram for; `bins` is to tell Python
-into how mnay bins the data should be divided. Based on `bins`, Matplotlib will
+into how many bins the data should be divided. Based on `bins`, Matplotlib will
 automatically find appropriate boundaries for all the bins in the histogram, and
-calculate how mnay values are in each one.
+calculate how many values are in each one.
 
 Let's see an example:
 ```python

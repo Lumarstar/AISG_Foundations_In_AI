@@ -3,6 +3,19 @@
 ## References
 This set of notes is made with reference to Datacamp's ["Introduction to Python" course](https://app.datacamp.com/learn/courses/intro-to-python-for-data-science).
 
+## Lesson Description
+
+Python is a general-purpose programming language that is becoming ever more popular for data science. Companies worldwide are using Python 
+to harvest insights from their data and gain a competitive edge. You will learn about powerful ways to store and manipulate data, 
+and helpful data science tools to begin conducting your own analyses.
+
+## Learning Objectives
+
+- Use Python interactively
+- Recognise Python’s basic data types
+- Able to store, access and manipulate data in lists
+- Able to use functions, methods and packages appropriately
+
 ## Table of Contents
 
 ### [Python Basics](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Introduction%20to%20Python/1__python_basics.md#python-basics)

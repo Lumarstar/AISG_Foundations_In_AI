@@ -203,6 +203,23 @@ We can change the colours of the plots by specifying the colour as a parameter.
 
 Specifically, for scatter plots, we specify the parameter `c`, and provide a list of strings that denote what colour each data point should be.
 
+To show an example, here we changed the colours of a previously shown scatter plot. `col` is a list which specifies colours.
+
+```python
+  plt.scatter(x = gdp_cap, y = life_exp, s = np.array(pop) * 2, c=col)
+
+  plt.xscale('log') 
+  plt.xlabel('GDP per Capita [in USD]')
+  plt.ylabel('Life Expectancy [in years]')
+  plt.title('World Development in 2007')
+  plt.xticks([1000,10000,100000], ['1k','10k','100k'])
+  
+  # Show the plot
+  plt.show()
+```
+
+![Scatter Plot with colours specified](https://github.com/Lumarstar/AISG_Foundations_In_AI/assets/63058663/b72cb4c8-23ea-4188-ad79-a048f346e727)
+
 ### Transparency
 
 To control the transparency of a plot, we specify the `alpha` parameter. `alpha` can take a value between 0 (completely transparent)

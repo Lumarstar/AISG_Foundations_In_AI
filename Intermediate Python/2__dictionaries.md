@@ -46,3 +46,87 @@ To access all the keys in the dictionary, we use the `.keys()` method.
 ```python
   my_dict.keys()
 ```
+
+To check if a key is present in a dictionary, we can use this:
+
+```python
+  key in my_dict
+```
+
+This returns a boolean. `True` if `key` is a key in `my_dict`, and `False` if otherwise.
+
+## Creating Key-Value Pairs
+
+Keys should be unique. If we add a new key-value pair using an existing key, the old value will be overridden, like so:
+
+```python
+  world = {'a': 1, 'b': 2, 'c': 3, 'b': 10}
+  print(world)
+```
+```console
+  > {world = {'a': 1, 'b': 10, 'c': 3}
+```
+
+These keys should also be immutable objects, ie. they cannot be changed after they are created. For example, strings, booleans,
+integers and floats are immutable objects! If we use a mutable object as a key, we will get thrown an error, like so:
+
+```python
+  {['just', 'to', 'test']: 'value'}
+```
+```console
+  > TypeError: unhashable type: list
+```
+
+## Assigning/Adding Values
+
+We can also add new values to the dictionary! Like this:
+
+```python
+  my_dict[new_key] = new_value
+```
+
+With the same syntax, we can also change the values that are assigned to the keys:
+
+```python
+  my_dict[existing_key] = new_value
+```
+
+The old value will be overridden, and the dictionary will be updated! This works because each key in the dictionary is unique, so
+Python knows we are trying to update values, rather than create a new key-value pair entry.
+
+## Deleting Key-Value Pairs
+
+To delete an entry from the dictionary, we use the `del()` function:
+
+```python
+  del(my_dict[key])
+```
+
+## Dictionaries... in dictionaries?
+
+That's right! Just like how lists can contain lists, dictionaries can, too, contain anything. For a key-value pair, the value can be anything:
+a list, a dictionary... it's all within bounds!
+
+Here's an example of a multi-leveled dictionary:
+
+```python
+  europe = {'spain': { 'capital':'madrid', 'population':46.77 },
+           'france': { 'capital':'paris', 'population':66.03 },
+           'germany': { 'capital':'berlin', 'population':80.62 },
+           'norway': { 'capital':'oslo', 'population':5.084 }}
+```
+
+It's perfectly possible to chain square brackets to select elements. This should look familiar... you've dealt with this in lists too.
+To fetch the population for Spain from europe, for example, you need:
+
+```python
+  europe['spain']['population']
+```
+
+## Lists vs Dictionaries
+
+| **Lists**                                                          | **Dictionaries**                                                      |
+|--------------------------------------------------------------------|-----------------------------------------------------------------------|
+| Select, update, and remove with `[]`                               | Select, update, and remove with `[]`                                  |
+| Indexed by a range of numbers                                      | Indexed by unique, immutable keys                                     |
+| Collection of values - order matters, for selecting entire subsets | Lookup table with unqiue keys (yep dictionaries are unordered)        |

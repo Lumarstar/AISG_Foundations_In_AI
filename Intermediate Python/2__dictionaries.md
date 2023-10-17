@@ -40,3 +40,9 @@ To access values stored in the dictionary, we enclose its key within square brac
 ```python
   my_dict[key]    # returns the value associated with this key
 ```
+
+To access all the keys in the dictionary, we use the `.keys()` method.
+
+```python
+  my_dict.keys()
+```

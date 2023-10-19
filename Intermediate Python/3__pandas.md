@@ -142,6 +142,21 @@ The row labels weren't recognised... but it's okay! We can fix this by specifyin
 
 #### Specifying Labels
 
+To refresh your memory, here is `brics` without customised row labels:
+
+```python
+  brics
+```
+
+```console
+          country     capital    area   population
+  0        Brazil    Brasília   8.516       200.40
+  1        Russia      Moscow  17.100       143.50
+  2         India   New Delhi   3.286      1252.00
+  3         China     Beijing   9.597      1357.00
+  4  South Africa    Pretoria   1.221        52.98
+```
+
 To specify labels, we use the `.index` attribute. Each element in the list corresponds
 to the label of that row.
 

@@ -173,3 +173,143 @@ to the label of that row.
   CH         China     Beijing   9.597      1357.00
   SA  South Africa    Pretoria   1.221        52.98
 ```
+
+### Accessing DataFrames
+
+All the ways shown here will refer to the previously created DataFrame `brics`.
+
+#### Column Access `[]`
+
+In general, to access a single column, we use square brackets to access it:
+
+```python
+  dataframe[col_name]
+```
+
+It is what we do to access the column `country`:
+
+```python
+  brics['country']
+```
+
+```console
+  BR        Brazil
+  RU        Russia
+  IN         India
+  CH         China
+  SA  South Africa
+  Name: country, dtype: object
+```
+
+If we use the `type()` function to find out more about this object that is returned,
+
+```python
+  type(brics['country'])
+```
+
+```console
+  pandas.core.series.Series
+```
+
+we can see that we actually get a **Pandas Series**. A Series is like a one dimensional
+array that can be labelled, and by pasting together a bunch of Series, we get a
+DataFrame.
+
+In order for the data to be returned in a DataFrame, we have to use double square brackets.
+
+```python
+  brics[['country']]
+```
+
+```console
+  BR        Brazil
+  RU        Russia
+  IN         India
+  CH         China
+  SA  South Africa
+```
+
+Checking its type,
+
+```python
+  type(brics[['country']])
+```
+
+```console
+  pandas.core.frame.DataFrame
+```
+
+we see that it is a DataFrame, but with only one column.
+
+To retrieve multiple columns, we give it a list of column labels, like so:
+
+```python
+  dataframe[list_of_labels]
+```
+
+Continuing with our previous example,
+
+```python
+  brics[['country', 'capital']]
+```
+
+```console
+           country     capital
+  BR        Brazil    Brasília
+  RU        Russia      Moscow
+  IN         India   New Delhi
+  CH         China     Beijing
+  SA  South Africa    Pretoria 
+```
+
+This returns us a "sub-DataFrame".
+
+#### Row Access `[]`
+
+We access rows through slicing. Yes! Like Python Lists!
+
+```python
+  dataframe[start:end]
+```
+
+Similar to Python Lists, we retrive the rows corresponding to the `start` index (inclusive)
+to the `end` index (exclusive).
+
+Applying it on our convenient `brics` DataFrame,
+
+```python
+  brics[1:4]
+```
+
+```console
+           country     capital    area   population
+  RU        Russia      Moscow  17.100       143.50
+  IN         India   New Delhi   3.286      1252.00
+  CH         China     Beijing   9.597      1357.00
+```
+
+#### `loc()` function
+
+Previously, we looked at our old friend `[]`. They work, but they offer limited
+functionality. Ideally, having something similar to 2D NumPy arrays would be good,
+where we used square brackets, but also the comma notation, which allowed us to slice
+across rows and columns together.
+
+This is where the `loc()` function comes in. The `loc()` function is label-based.
+We put the label of the row of interest in square brackets after `loc`.
+
+```python
+  dataframe.loc[my_label]
+```
+
+Applying it on `brics`, say we want to retrive information about Russia:
+
+```python
+  brics.loc['RU']
+```
+
+
+
+#### `iloc()` function
+
+Unlike its `loc()` counterpart, `iloc()` is integer position-based.

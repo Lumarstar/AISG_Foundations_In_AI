@@ -78,7 +78,7 @@ previous table:
 ```
 
 ```console
-           country     capital    area   population
+          country     capital    area   population
   0        Brazil    Brasília   8.516       200.40
   1        Russia      Moscow  17.100       143.50
   2         India   New Delhi   3.286      1252.00
@@ -130,7 +130,7 @@ The row labels weren't recognised... but it's okay! We can fix this by specifyin
 ```
 
 ```console
-           country     capital    area   population
+          country     capital    area   population
   0        Brazil    Brasília   8.516       200.40
   1        Russia      Moscow  17.100       143.50
   2         India   New Delhi   3.286      1252.00

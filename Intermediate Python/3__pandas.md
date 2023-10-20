@@ -387,3 +387,69 @@ Using `brics` as an example, say we want to retrieve all the countries' names an
 
 Unlike its `loc[]` counterpart, `iloc[]` is integer position-based. Meaning, instead of
 using labels, we use indices.
+
+```python
+  # if only a scalar integer is given, it will retrieve that row as a Series
+  dataframe.iloc[index]
+
+  # if only one list of indices is given, it will assume it refers to rows
+  dataframe.iloc[list_of_indices]
+
+  # specifying for both rows and columns
+  dataframe.iloc[list_of_row_indices, list_of_col_indices]
+
+  # you can also specify the row and column indices by slicing
+  dataframe.iloc[[row_start:row_end, col_start:col_end]]
+
+  # selecting all rows (this method works for columns too)
+  dataframe.iloc[:, list_of_col_indices]
+```
+
+Applying all of these on `brics`,
+
+```python
+  # retrieves Russian information
+  print("Information on Russia:")
+  print(brics.iloc[1])
+
+  # retrieves Russia, India and China
+  print("\nInformation on Russia, India, China:")
+  print(brics.iloc[[1, 2, 3]])
+
+  # retrieves the name and capitals of Russia, India and China
+  print("\nInformation on Russia, India, China's names and capitals:")
+  print(brics.iloc[[1, 2, 3], [0, 1]])
+
+  # retrieves the names and capitals of all countries
+  print("\nInformation on all countries' names and capitals:")
+  print(brics.iloc[:, [0, 1]])
+```
+
+```console
+  Information on Russia:
+  country       Russia
+  capital       Moscow
+  area            17.1
+  population     143.5
+  Name: RU, dtype: object
+  
+  Information on Russia, India, China:
+     country    capital    area  population
+  RU  Russia     Moscow  17.100       143.5
+  IN   India  New Delhi   3.286      1252.0
+  CH   China    Beijing   9.597      1357.0
+  
+  Information on Russia, India, China's names and capitals:
+     country    capital
+  RU  Russia     Moscow
+  IN   India  New Delhi
+  CH   China    Beijing
+  
+  Information on all countries' names and capitals:
+           country    capital
+  BR        Brazil   Brasilia
+  RU        Russia     Moscow
+  IN         India  New Delhi
+  CH         China    Beijing
+  SA  South Africa   Pretoria
+```

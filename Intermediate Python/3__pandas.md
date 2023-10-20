@@ -408,15 +408,19 @@ using labels, we use indices.
   dataframe.iloc[index]
 
   # if only one list of indices is given, it will assume it refers to rows
+  # returns a DataFrame
   dataframe.iloc[list_of_indices]
 
   # specifying for both rows and columns
+  # returns a DataFrame
   dataframe.iloc[list_of_row_indices, list_of_col_indices]
 
   # you can also specify the row and column indices by slicing
+  # returns a DataFrame
   dataframe.iloc[[row_start:row_end, col_start:col_end]]
 
   # selecting all rows (this method works for columns too)
+  # returns a DataFrame
   dataframe.iloc[:, list_of_col_indices]
 ```
 

@@ -25,6 +25,21 @@ To use it in your code, you need to import it first, like so:
 
 By convention, Pandas is imported and `pd` is the alias we use.
 
+## Series
+
+*This section is not included in the DataCamp course, but I felt it was right to
+include this because there are some important things that should be said.*
+
+A series is usually a result of trying to retrieve one column or row of values
+from a DataFrame.
+
+To retrieve values from a Series is similar to retrieving values from dictionaries!
+We use square brackets `[]` to retrieve values that are associated with its label.
+
+```python
+  value = my_series[label]
+```
+
 ## DataFrame
 
 DataFrames are tables of data. Let's say we have a table that contains information about countries:

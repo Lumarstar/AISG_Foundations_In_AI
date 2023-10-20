@@ -2,6 +2,8 @@
 
 ## Comparison Operators
 
+### The "normal" stuff
+
 Comparison operators are operators that can tell how two Python values relate, and result
 in a boolean.
 
@@ -61,7 +63,8 @@ Here is a summary of all comparison operators.
 | `==`           | equal                    |
 | `!=`           | not equal                |
 
-**WARNING: `=` IS THE ASSIGNMENT OPERATOR. DO NOT GET THIS MIXED UP.**
+1. **WARNING: `=` IS THE ASSIGNMENT OPERATOR. DO NOT GET THIS MIXED UP.**
+2. **SECOND WARNING: `=<` and `=>` are not valid syntaxes.**
 
 Also since you're here, take a look at some cool stuff:
 
@@ -71,6 +74,9 @@ Also since you're here, take a look at some cool stuff:
 
   # how about this?
   print(False == 0)
+
+  # this?
+  print(True > False)
 
   # this...?
   # especially this by the way, since `if 2` works but `2 != True` so this is kinda iffy
@@ -83,9 +89,47 @@ Also since you're here, take a look at some cool stuff:
 ```console
   True
   True
+  True
   False
   False
 ```
 
 These boolean comparisons worked fine because a boolean is a special kind of integer!
 `True` corresponds to `1`, and `False` to `0`.
+
+### Here comes the NumPy arrays...
+
+As we already know, we can apply comparison operators on NumPy arrays too.
+
+1. If we apply a comparison operator between a `np.array` and an `int` or `float`,
+each of the elements in `np.array` will be compared individually with the provided
+`int` or `float`. A boolean array will be returned.
+
+For example,
+
+```python
+  import numpy as np
+  my_array = np.array([0, 1, 2, 3, 4, 5])
+  print(my_array < 3)
+```
+
+```console
+  [True True True False False False]
+```
+
+2. If we apply a comparison operator between two `np.array`, their elements at the same
+index will be compared. This means the two arrays must be of the same dimensions. A
+boolean array will be returned.
+
+Again, for example,
+
+```python
+  import numpy as np
+  my_array = np.array([0, 1, 2, 3, 4, 5])
+  other_array = np.array([5, 4, 3, 2, 1, 0])
+  print(my_array >= other_array)
+```
+
+```console
+  [False False False True True True]
+```

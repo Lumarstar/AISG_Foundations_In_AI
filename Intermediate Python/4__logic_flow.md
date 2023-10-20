@@ -62,3 +62,30 @@ Here is a summary of all comparison operators.
 | `!=`           | not equal                |
 
 **WARNING: `=` IS THE ASSIGNMENT OPERATOR. DO NOT GET THIS MIXED UP.**
+
+Also since you're here, take a look at some cool stuff:
+
+```python
+  # what do you think this yields?
+  print(True == 1)
+
+  # how about this?
+  print(False == 0)
+
+  # this...?
+  # especially this by the way, since `if 2` works but `2 != True` so this is kinda iffy
+  print(True == 2)
+
+  # and this...
+  print(False == 2)
+```
+
+```console
+  True
+  True
+  False
+  False
+```
+
+These boolean comparisons worked fine because a boolean is a special kind of integer!
+`True` corresponds to `1`, and `False` to `0`.

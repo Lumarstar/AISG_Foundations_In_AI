@@ -288,28 +288,102 @@ Applying it on our convenient `brics` DataFrame,
   CH         China     Beijing   9.597      1357.00
 ```
 
-#### `loc()` function
+#### `loc[]` function
 
 Previously, we looked at our old friend `[]`. They work, but they offer limited
 functionality. Ideally, having something similar to 2D NumPy arrays would be good,
 where we used square brackets, but also the comma notation, which allowed us to slice
 across rows and columns together.
 
-This is where the `loc()` function comes in. The `loc()` function is label-based.
-We put the label of the row of interest in square brackets after `loc`.
+This is where the `loc[]` function comes in. The `loc[]` function is label-based.
+We put the label of the row of interest in square brackets.
 
 ```python
   dataframe.loc[my_label]
 ```
 
-Applying it on `brics`, say we want to retrive information about Russia:
+Applying it on `brics`, say we want to retrieve information about Russia:
 
 ```python
   brics.loc['RU']
 ```
 
+```console
+  country       Russia
+  capital       Moscow
+  area            17.1
+  population     143.5
+  Name:   RU, dtype: object
+```
 
+We get a Pandas Series which contains all the information in the row!
 
-#### `iloc()` function
+For the result returned to be a DataFrame, we need to give the `loc[]` function a list
+of labels.
 
-Unlike its `loc()` counterpart, `iloc()` is integer position-based.
+```python
+  # the list of labels can be either row or column labels, but not a mix of both
+  dataframe.loc[list_of_labels]
+```
+
+Applying it on `brics`, say we want to also include India and China:
+
+```python
+  brics.loc[['RU', 'IN', 'CH']]
+```
+
+```console
+     country    capital    area  population
+  RU  Russia     Moscow  17.100       143.5
+  IN   India  New Delhi   3.286      1252.0
+  CH   China    Beijing   9.597      1357.0
+```
+
+Up till now, we have only selected entire rows. However, `.loc[]` is capable of so
+much more! We can **extend our selection with a comma** and thus specify the columns
+we are interested in.
+
+In general, we specify the row and columns we want like so:
+
+```python
+  dataframe[list_of_row_labels, list_of_column_labels]
+```
+
+This returns the intersection of the specified rows and columns.
+
+Let's trying using this to retrieve the country names and capitals of Russia,
+India and China.
+
+```python
+  brics.loc[['RU', 'IN', 'CH'], ['country', 'capital']]
+```
+
+```console
+     country    capital                      
+  RU  Russia     Moscow
+  IN   India  New Delhi
+  CH   China    Beijing
+```
+
+Here's a neat trick if we want to specify all the rows (or columns). Instead of
+painstakingly writing every label down, we can use `:` in place of the list of labels.
+
+Using `brics` as an example, say we want to retrieve all the countries' names and capitals:
+
+```python
+  brics.loc[:, ['country', 'capital']]
+```
+
+```console
+           country    capital                  
+  BR        Brazil   Brasília
+  RU        Russia     Moscow
+  IN         India  New Delhi
+  CH         China    Beijing
+  SA  South Africa   Pretoria
+```
+
+#### `iloc[]` function
+
+Unlike its `loc[]` counterpart, `iloc[]` is integer position-based. Meaning, instead of
+using labels, we use indices.

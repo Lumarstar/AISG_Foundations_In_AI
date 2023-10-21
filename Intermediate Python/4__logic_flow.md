@@ -279,7 +279,7 @@ The `if` statement is applied this way:
 
 ```python
   if condition:
-    expression
+      expression
 ```
 
 If `condition` evaluates to `True`, then the `expression` within the code block will be executed.
@@ -294,9 +294,9 @@ For instance, let's say we have the following program:
   z = 4
 
   if z % 2 == 0:
-    # there can be more than one expression within the code block
-    print('hello!')
-    print('z is even')
+      # there can be more than one expression within the code block
+      print('hello!')
+      print('z is even')
 
   print('done!')    # outside of the code block
 ```
@@ -315,8 +315,8 @@ Watch what happens when `z = 5`:
   z = 5
 
   if z % 2 == 0:
-    print('hello!')
-    print('z is even')
+      print('hello!')
+      print('z is even')
 
   print('done!')
 ```
@@ -327,4 +327,41 @@ Watch what happens when `z = 5`:
 
 ### `else`
 
+Now, I'm sure you'd want to do something when `condition` evaluates to `False`.
+
+And sure you can! By using the `else` statement.
+
+```python
+  if condition:
+      expression
+  else:
+      expression
+```
+
+We don't have to specify a condition for the `else` statement. Its statements will be executed when `condition` is not `True`.
+
+Looking at our original example to do with `z`,
+
+```python
+  z = 5
+
+  if z % 2 == 0:
+      print('hello!')
+      print('z is even')
+
+  else:
+      print('okay!')
+      print('z is odd')
+
+  print('done!')
+```
+
+```console
+  okay!
+  z is odd
+  done!
+```
+
 ### `elif`
+
+`elif` basically means "else if". 

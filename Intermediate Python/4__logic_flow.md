@@ -430,3 +430,69 @@ stops at the `if` statement:
 ```console
   z is divisible by 2
 ```
+
+## Filtering Pandas DataFrames
+
+For reference, the DataFrame we are using will be the `brics` DataFrame from the previous
+set of notes.
+
+```python
+  brics
+```
+
+```console
+           country     capital    area   population
+  BR        Brazil    Brasília   8.516       200.40
+  RU        Russia      Moscow  17.100       143.50
+  IN         India   New Delhi   3.286      1252.00
+  CH         China     Beijing   9.597      1357.00
+  SA  South Africa    Pretoria   1.221        52.98
+```
+
+Suppose we now want to keep the countries with `area` greater than 8 million square
+kilometres. We follow a 3 step process:
+
+1. Get the `area` column
+2. Compare using comparison operators
+3. Subset DataFrame with desired values
+
+```python
+  # step 1: select column
+  series = brics['area']
+
+  # step 2: use a comparison operator to get a boolean Series
+  is_huge = series > 8
+
+  # step 3: use this boolean Series to subset the Pandas DataFrame
+  # put is_huge inside square brackets
+  brics[is_huge]
+
+  # this is if we combine all the steps together
+  # brics[brics['area'] > 8]
+```
+
+```console
+           country     capital    area   population
+  BR        Brazil    Brasília   8.516       200.40
+  RU        Russia      Moscow  17.100       143.50
+  CH         China     Beijing   9.597      1357.00
+```
+
+Also! For boolean operators, since Pandas is built on NumPy, we can use the logical
+boolean functions we use for NumPy! (If you're lazy to scroll, they are `np.logical_and()`,
+`np.logical_or()`, `np.logical_not()`) Note that we have to import NumPy before we can
+use these functions.
+
+For example, say we want to find countries with area between 8 and 10 million square
+kilometres. We can use these boolean functions to subset DataFrames too!
+
+```python
+  import numpy as np
+  brics[np.logical_and(brics['area'] > 8, brics['area'] < 10)]
+```
+
+```console
+           country     capital    area   population
+  BR        Brazil    Brasília   8.516       200.40
+  CH         China     Beijing   9.597      1357.00
+```

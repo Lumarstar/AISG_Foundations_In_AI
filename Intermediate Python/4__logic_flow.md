@@ -66,6 +66,14 @@ Here is a summary of all comparison operators.
 1. **WARNING: `=` IS THE ASSIGNMENT OPERATOR. DO NOT GET THIS MIXED UP.**
 2. **SECOND WARNING: `=<` and `=>` are not valid syntaxes.**
 
+Needless to say too, operands can be complicated expressions, like these:
+
+```python
+  2 * my_kitchen < 3 * your_kitchen
+```
+
+so do what you desire and go wild! Python knows how to process them yes.
+
 Also since you're here, take a look at some cool stuff:
 
 ```python

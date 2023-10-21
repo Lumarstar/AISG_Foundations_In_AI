@@ -205,6 +205,36 @@ This operator is useful to negate results.
 
 *Notice that `not` has a higher priority than `and` and `or`. It is executed first.*
 
+### Combining them together
+
+A short question here for you to see if you get the hang of `and`, `or`, `not`.
+
+```python
+  x = 8
+  y = 9
+
+  # what would this expression return?
+  not(not(x < 3) and not(y > 14 or y > 10))
+```
+
+We can solve this by breaking the expression down into its constituent parts.
+
+```python
+  # part 1
+  not(x < 3) == not(False) == True
+
+  # part 2
+  not(y > 14 or y > 10) == not(False) == True
+```
+
+So this now simplifies down to:
+
+```python
+  not(True and True) == not(True) == False
+```
+
+Thus, the original expression evaluates to `False`.
+
 ### NumPy Array operations
 
 If we just simply use these operators on NumPy arrays, they return ValueErrors.

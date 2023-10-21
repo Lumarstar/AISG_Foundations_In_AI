@@ -224,8 +224,7 @@ Instead of using the normal boolean operators, we now use the following function
 ```
 
 ```console
-  array([True, False, True, False, True],
-  dtype=bool)
+  array([True, False, True, False, True], dtype=bool)
 ```
 
 Now the logical operators work as expected - they are applied on each element of the array!

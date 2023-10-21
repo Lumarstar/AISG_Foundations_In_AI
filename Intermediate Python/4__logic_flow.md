@@ -1,4 +1,4 @@
-# Logic, Control Flow and Filtering
+aero xx I# Logic, Control Flow and Filtering
 
 ## Comparison Operators
 
@@ -133,3 +133,110 @@ Again, for example,
 ```console
   [False False False True True True]
 ```
+
+## Boolean operators
+
+These operators allow us to combine booleans!
+
+### `and`
+
+Takes two booleans, and returns `True`
+only if both booleans are True.
+
+| **operation**         | **result** |
+--------------------------------------
+| `True` `and` `True`   | `True`     |
+| `True` `and` `False`  | `False`    |
+| `False` `and` `False` | `False`    |
+
+Here's an example of this in action:
+
+```python
+  x = 12
+
+  # find out if x is between 5 and 15
+  print(x > 5 and x < 15)
+```
+
+```console
+  True
+```
+
+### `or`
+
+This operator just needs at least one
+of the operands to be `True` to evaluate
+`True`.
+
+| **operation**        | **result** |
+-------------------------------------
+| `True` `or` `True`   | `True`     |
+| `True` `or` `False`  | `True`     |
+| `False` `or` `True`  | `True`     |
+| `False` `or` `False` | `False`    |
+
+Take a look at a simple example to see
+this operator applied on some variables:
+
+```python
+  y = 5
+
+  # find out if y is less than 7 or larger
+  # than 13
+  print(y < 7 or y > 13)
+```
+
+```console
+  True
+```
+
+### `not`
+
+This operator is useful to negate results.
+
+| **operation**  | **result** |
+-------------------------------
+| `not` `True`   | `False`    |
+| `not` `False`  | `True`     |
+
+### NumPy Array operations
+
+If we just simply use these operators
+on NumPy arrays, they return ValueErrors.
+
+Assume `bmi` is a NumPy array.
+
+```python
+  # we just want to find BMIs between 21
+  # and 22
+  bmi > 21 and bmi < 22
+```
+
+```console
+  ValueError: The truth value of an array
+  with more than one element is ambiguous.
+  Use a.any() or a.all()
+```
+
+Instead of using the normal boolean
+operators, we now use the following
+functions instead:
+
+| **numpy operation** | **meaning** |
+-------------------------------------
+| `np.logical_and()`  | `and`       |
+| `np.logical_or()`   | `or`        |
+| `np.logical_not()`  | `not`       |
+
+```python
+  np.logical_and(bmi < 22, bmi > 21)
+```
+
+```console
+  array([True, False, True, False, True],
+  dtype=bool)
+```
+
+Now the logical operators work as
+expected - they are applied on each
+element of the array!

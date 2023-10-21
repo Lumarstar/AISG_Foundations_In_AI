@@ -268,3 +268,63 @@ Instead of using the normal boolean operators, we now use the following function
 ```
 
 Now the logical operators work as expected - they are applied on each element of the array!
+
+## Conditional Statements
+
+Conditional statements allow us to control the flow of our code.
+
+### `if`
+
+The `if` statement is applied this way:
+
+```python
+  if condition:
+    expression
+```
+
+If `condition` evaluates to `True`, then the `expression` within the code block will be executed.
+
+After `condition`, a colon `:` is used to denote a code block, and `expression`, being within the code block, will have to be indented with tabs or spaces.
+
+To exit the `if` statement, simply write code without the indentation to show that subsequent code is not part of the `if` code block.
+
+For instance, let's say we have the following program:
+
+```python
+  z = 4
+
+  if z % 2 == 0:
+    # there can be more than one expression within the code block
+    print('hello!')
+    print('z is even')
+
+  print('done!')    # outside of the code block
+```
+
+```console
+  hello!
+  z is even
+  done!
+```
+
+Now, if the `condition` evaluates to `False`, then the `expression` within the `if` code block will not be executed.
+
+Watch what happens when `z = 5`:
+
+```python
+  z = 5
+
+  if z % 2 == 0:
+    print('hello!')
+    print('z is even')
+
+  print('done!')
+```
+
+```console
+  done!
+```
+
+### `else`
+
+### `elif`

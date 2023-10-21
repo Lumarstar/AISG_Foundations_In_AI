@@ -282,11 +282,14 @@ The `if` statement is applied this way:
       expression
 ```
 
-If `condition` evaluates to `True`, then the `expression` within the code block will be executed.
+If `condition` evaluates to `True`, then the `expression` within the code block will be
+executed.
 
-After `condition`, a colon `:` is used to denote a code block, and `expression`, being within the code block, will have to be indented with tabs or spaces.
+After `condition`, a colon `:` is used to denote a code block, and `expression`, being
+within the code block, will have to be indented with tabs or spaces.
 
-To exit the `if` statement, simply write code without the indentation to show that subsequent code is not part of the `if` code block.
+To exit the `if` statement, simply write code without the indentation to show that
+subsequent code is not part of the `if` code block.
 
 For instance, let's say we have the following program:
 
@@ -307,7 +310,8 @@ For instance, let's say we have the following program:
   done!
 ```
 
-Now, if the `condition` evaluates to `False`, then the `expression` within the `if` code block will not be executed.
+Now, if the `condition` evaluates to `False`, then the `expression` within the `if` code
+block will not be executed.
 
 Watch what happens when `z = 5`:
 
@@ -338,7 +342,8 @@ And sure you can! By using the `else` statement.
       expression
 ```
 
-We don't have to specify a condition for the `else` statement. Its statements will be executed when `condition` is not `True`.
+We don't have to specify a condition for the `else` statement. Its statements will be
+executed when `condition` is not `True`.
 
 Looking at our original example to do with `z`,
 
@@ -364,4 +369,64 @@ Looking at our original example to do with `z`,
 
 ### `elif`
 
-`elif` basically means "else if". 
+`elif` basically means "else if". This allows us to introduce more conditions.
+
+```python
+  if condition:
+      expression
+  elif condition:
+      expression
+  else:
+      expression
+```
+
+We can stack as many `elif`s as we want between the `if` and `else` statements.
+
+For instance, we want to check if a number is divisible by 2, 3, 5 or 7:
+
+```python
+  # i picked a prime number to show that all the conditions will be checked
+  # before the expression under the else block is run
+  z = 11
+
+  if z % 2 == 0:
+      print('z is divisible by 2')
+  elif z % 3 == 0:
+      print('z is divisible by 3')
+  elif z % 5 == 0:
+      print('z is divisble by 5')
+  elif z % 7 == 0:
+      print('z is divisible by 7')
+  else:
+      print('z is not divisible by 2, 3, 5 and 7')
+```
+
+```console
+  z is not divisible by 2, 3, 5 and 7
+```
+
+Python will go through these conditions from top to bottom. As soon as Python reaches
+a condition that is true, it executes the corresponding code and then leaves the control
+structure after that.
+
+This means that in this example. the `elif` statement here will not be executed, as Python 
+stops at the `if` statement:
+
+```python
+  z = 6
+
+  if z % 2 == 0:
+      print('z is divisible by 2')
+  elif z % 3 == 0:
+      print('z is divisible by 3')
+  elif z % 5 == 0:
+      print('z is divisble by 5')
+  elif z % 7 == 0:
+      print('z is divisible by 7')
+  else:
+      print('z is not divisible by 2, 3, 5 and 7')
+```
+
+```console
+  z is divisible by 2
+```

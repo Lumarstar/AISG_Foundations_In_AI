@@ -66,6 +66,14 @@ Here is a summary of all comparison operators.
 1. **WARNING: `=` IS THE ASSIGNMENT OPERATOR. DO NOT GET THIS MIXED UP.**
 2. **SECOND WARNING: `=<` and `=>` are not valid syntaxes.**
 
+Needless to say too, operands can be complicated expressions, like these:
+
+```python
+  2 * my_kitchen < 3 * your_kitchen
+```
+
+so do what you desire and go wild! Python knows how to process them yes.
+
 Also since you're here, take a look at some cool stuff:
 
 ```python
@@ -195,6 +203,38 @@ This operator is useful to negate results.
 | `not` `True`   | `False`    |
 | `not` `False`  | `True`     |
 
+*Notice that `not` has a higher priority than `and` and `or`. It is executed first.*
+
+### Combining them together
+
+A short question here for you to see if you get the hang of `and`, `or`, `not`.
+
+```python
+  x = 8
+  y = 9
+
+  # what would this expression return?
+  not(not(x < 3) and not(y > 14 or y > 10))
+```
+
+We can solve this by breaking the expression down into its constituent parts.
+
+```python
+  # part 1
+  not(x < 3) == not(False) == True
+
+  # part 2
+  not(y > 14 or y > 10) == not(False) == True
+```
+
+So this now simplifies down to:
+
+```python
+  not(True and True) == not(True) == False
+```
+
+Thus, the original expression evaluates to `False`.
+
 ### NumPy Array operations
 
 If we just simply use these operators on NumPy arrays, they return ValueErrors.
@@ -224,8 +264,235 @@ Instead of using the normal boolean operators, we now use the following function
 ```
 
 ```console
-  array([True, False, True, False, True],
-  dtype=bool)
+  array([True, False, True, False, True], dtype=bool)
 ```
 
 Now the logical operators work as expected - they are applied on each element of the array!
+
+## Conditional Statements
+
+Conditional statements allow us to control the flow of our code.
+
+### `if`
+
+The `if` statement is applied this way:
+
+```python
+  if condition:
+      expression
+```
+
+If `condition` evaluates to `True`, then the `expression` within the code block will be
+executed.
+
+After `condition`, a colon `:` is used to denote a code block, and `expression`, being
+within the code block, will have to be indented with tabs or spaces.
+
+To exit the `if` statement, simply write code without the indentation to show that
+subsequent code is not part of the `if` code block.
+
+For instance, let's say we have the following program:
+
+```python
+  z = 4
+
+  if z % 2 == 0:
+      # there can be more than one expression within the code block
+      print('hello!')
+      print('z is even')
+
+  print('done!')    # outside of the code block
+```
+
+```console
+  hello!
+  z is even
+  done!
+```
+
+Now, if the `condition` evaluates to `False`, then the `expression` within the `if` code
+block will not be executed.
+
+Watch what happens when `z = 5`:
+
+```python
+  z = 5
+
+  if z % 2 == 0:
+      print('hello!')
+      print('z is even')
+
+  print('done!')
+```
+
+```console
+  done!
+```
+
+### `else`
+
+Now, I'm sure you'd want to do something when `condition` evaluates to `False`.
+
+And sure you can! By using the `else` statement.
+
+```python
+  if condition:
+      expression
+  else:
+      expression
+```
+
+We don't have to specify a condition for the `else` statement. Its statements will be
+executed when `condition` is not `True`.
+
+Looking at our original example to do with `z`,
+
+```python
+  z = 5
+
+  if z % 2 == 0:
+      print('hello!')
+      print('z is even')
+
+  else:
+      print('okay!')
+      print('z is odd')
+
+  print('done!')
+```
+
+```console
+  okay!
+  z is odd
+  done!
+```
+
+### `elif`
+
+`elif` basically means "else if". This allows us to introduce more conditions.
+
+```python
+  if condition:
+      expression
+  elif condition:
+      expression
+  else:
+      expression
+```
+
+We can stack as many `elif`s as we want between the `if` and `else` statements.
+
+For instance, we want to check if a number is divisible by 2, 3, 5 or 7:
+
+```python
+  # i picked a prime number to show that all the conditions will be checked
+  # before the expression under the else block is run
+  z = 11
+
+  if z % 2 == 0:
+      print('z is divisible by 2')
+  elif z % 3 == 0:
+      print('z is divisible by 3')
+  elif z % 5 == 0:
+      print('z is divisble by 5')
+  elif z % 7 == 0:
+      print('z is divisible by 7')
+  else:
+      print('z is not divisible by 2, 3, 5 and 7')
+```
+
+```console
+  z is not divisible by 2, 3, 5 and 7
+```
+
+Python will go through these conditions from top to bottom. As soon as Python reaches
+a condition that is true, it executes the corresponding code and then leaves the control
+structure after that.
+
+This means that in this example. the `elif` statement here will not be executed, as Python 
+stops at the `if` statement:
+
+```python
+  z = 6
+
+  if z % 2 == 0:
+      print('z is divisible by 2')
+  elif z % 3 == 0:
+      print('z is divisible by 3')
+  elif z % 5 == 0:
+      print('z is divisble by 5')
+  elif z % 7 == 0:
+      print('z is divisible by 7')
+  else:
+      print('z is not divisible by 2, 3, 5 and 7')
+```
+
+```console
+  z is divisible by 2
+```
+
+## Filtering Pandas DataFrames
+
+For reference, the DataFrame we are using will be the `brics` DataFrame from the previous
+set of notes.
+
+```python
+  brics
+```
+
+```console
+           country     capital    area   population
+  BR        Brazil    Brasília   8.516       200.40
+  RU        Russia      Moscow  17.100       143.50
+  IN         India   New Delhi   3.286      1252.00
+  CH         China     Beijing   9.597      1357.00
+  SA  South Africa    Pretoria   1.221        52.98
+```
+
+Suppose we now want to keep the countries with `area` greater than 8 million square
+kilometres. We follow a 3 step process:
+
+1. Get the `area` column
+2. Compare using comparison operators
+3. Subset DataFrame with desired values
+
+```python
+  # step 1: select column
+  series = brics['area']
+
+  # step 2: use a comparison operator to get a boolean Series
+  is_huge = series > 8
+
+  # step 3: use this boolean Series to subset the Pandas DataFrame
+  # put is_huge inside square brackets
+  brics[is_huge]
+
+  # this is if we combine all the steps together
+  # brics[brics['area'] > 8]
+```
+
+```console
+           country     capital    area   population
+  BR        Brazil    Brasília   8.516       200.40
+  RU        Russia      Moscow  17.100       143.50
+  CH         China     Beijing   9.597      1357.00
+```
+
+Also! For boolean operators, since Pandas is built on NumPy, we can use the logical
+boolean functions we use for NumPy! (If you're lazy to scroll, they are `np.logical_and()`,
+`np.logical_or()`, `np.logical_not()`) Note that we have to import NumPy before we can
+use these functions.
+
+For example, say we want to find countries with area between 8 and 10 million square
+kilometres. We can use these boolean functions to subset DataFrames too!
+
+```python
+  import numpy as np
+  brics[np.logical_and(brics['area'] > 8, brics['area'] < 10)]
+```
+
+```console
+           country     capital    area   population
+  BR        Brazil    Brasília   8.516       200.40
+  CH         China     Beijing   9.597      1357.00
+```

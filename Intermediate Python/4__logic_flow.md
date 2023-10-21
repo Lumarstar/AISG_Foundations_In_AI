@@ -1,4 +1,4 @@
-aero xx I# Logic, Control Flow and Filtering
+# Logic, Control Flow and Filtering
 
 ## Comparison Operators
 
@@ -140,11 +140,10 @@ These operators allow us to combine booleans!
 
 ### `and`
 
-Takes two booleans, and returns `True`
-only if both booleans are True.
+Takes two booleans, and returns `True` only if both booleans are True.
 
 | **operation**         | **result** |
---------------------------------------
+|-----------------------|------------|
 | `True` `and` `True`   | `True`     |
 | `True` `and` `False`  | `False`    |
 | `False` `and` `False` | `False`    |
@@ -164,19 +163,16 @@ Here's an example of this in action:
 
 ### `or`
 
-This operator just needs at least one
-of the operands to be `True` to evaluate
-`True`.
+This operator just needs at least one of the operands to be `True` to evaluate `True`.
 
 | **operation**        | **result** |
--------------------------------------
+|----------------------|------------|
 | `True` `or` `True`   | `True`     |
 | `True` `or` `False`  | `True`     |
 | `False` `or` `True`  | `True`     |
 | `False` `or` `False` | `False`    |
 
-Take a look at a simple example to see
-this operator applied on some variables:
+Take a look at a simple example to see this operator applied on some variables:
 
 ```python
   y = 5
@@ -195,35 +191,30 @@ this operator applied on some variables:
 This operator is useful to negate results.
 
 | **operation**  | **result** |
--------------------------------
+|----------------|------------|
 | `not` `True`   | `False`    |
 | `not` `False`  | `True`     |
 
 ### NumPy Array operations
 
-If we just simply use these operators
-on NumPy arrays, they return ValueErrors.
+If we just simply use these operators on NumPy arrays, they return ValueErrors.
 
 Assume `bmi` is a NumPy array.
 
 ```python
-  # we just want to find BMIs between 21
-  # and 22
+  # we just want to find BMIs between 21 and 22
   bmi > 21 and bmi < 22
 ```
 
 ```console
-  ValueError: The truth value of an array
-  with more than one element is ambiguous.
+  ValueError: The truth value of an array with more than one element is ambiguous.
   Use a.any() or a.all()
 ```
 
-Instead of using the normal boolean
-operators, we now use the following
-functions instead:
+Instead of using the normal boolean operators, we now use the following functions instead:
 
 | **numpy operation** | **meaning** |
--------------------------------------
+|---------------------|-------------|
 | `np.logical_and()`  | `and`       |
 | `np.logical_or()`   | `or`        |
 | `np.logical_not()`  | `not`       |
@@ -237,6 +228,4 @@ functions instead:
   dtype=bool)
 ```
 
-Now the logical operators work as
-expected - they are applied on each
-element of the array!
+Now the logical operators work as expected - they are applied on each element of the array!

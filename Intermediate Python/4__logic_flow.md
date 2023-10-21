@@ -203,6 +203,8 @@ This operator is useful to negate results.
 | `not` `True`   | `False`    |
 | `not` `False`  | `True`     |
 
+*Notice that `not` has a higher priority than `and` and `or`. It is executed first.*
+
 ### NumPy Array operations
 
 If we just simply use these operators on NumPy arrays, they return ValueErrors.

@@ -63,3 +63,90 @@ Say we did not update the value of `error`:
   50
   ...
 ```
+
+## `for` loop
+
+The recipe for a `for` loop is:
+
+```python
+  # for each variable in a sequence,
+  for var in seq:
+      # execute the expression
+      expression
+```
+
+### Loop over List
+
+Let's say we have a list `fam`, and we want to print out each of the items in the list separately.
+
+```python
+  fam = [1.73, 1.68, 1.71, 1.89]
+
+  # for each height in the list fam
+  for height in fam:
+      # print the height
+      print(height)
+```
+
+We should analyse the code to help us better understand the `for` loop.
+
+1. `for height in fam:`: this means we want to execute some code for each `height` in `fam`
+2. `height` is an arbitrary variable name. It can be anything, like `h`, or `var`, or even something completely unrelated to what we are doing.
+3. Inside the for loop, at every iteration, we print out the value of the current `height`.
+4. When Python executes this code, it will first evaluate `seq`. In this case, it is the list `fam`. After this, the actual iteration starts.
+5. At each iteration, Python will store the first value in the list, execute the code, then store the second value, execute the code... all the way until all the values have been read, stored, and code executed.
+
+So, the output will be something like this:
+
+```console
+  1.73
+  1.68
+  1.71
+  1.89
+```
+
+### `enumerate()` function
+
+The `enumerate()` function is very useful to get the index of items in an iterable, such as a list.
+
+Looking at our previous example, say we want to change our output to this:
+
+```console
+  index 0: 1.73
+  index 1: 1.68
+  index 2: 1.71
+  index 3: 1.89
+```
+
+To achieve this indexing, we use the `enumerate()` function.
+
+```python
+  fam = [1.73, 1.68, 1.71, 1.89]
+  for index, height in enumerate(fam):
+      print("index " + str(index) + ": " + str(height))
+```
+
+We should probably explain what's happening.
+
+1. `enumerate(fam)` produces two values on each iteration: the index of the value, and the value itself.
+2. On each iteration, `index` will contain the index, and `height` will contain the height.
+
+### Loop over String
+
+The `for` loop does not only work on lists. It also works on strings! In the case of strings, the for loop will iterate through each character in the string, like in this example.
+
+```python
+  # for each character in the string
+  for char in "family":
+      # we capitalize the character
+      print(c.capitalize())
+```
+
+```console
+  F
+  A
+  M
+  I
+  L
+  Y
+```

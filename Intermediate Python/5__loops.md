@@ -240,6 +240,17 @@ lists), the variable names `key` and `value` are totally arbitrary. We can call 
 anything we want, so long as we remember them and are able to use them properly. **The order does matter though,** because the first variable gets the key, and the second gets
 the value.
 
+Here, take a look at an example where different variable names are used.
+
+```python
+  europe = {'spain':'madrid', 'france':'paris', 'germany':'berlin',
+            'norway':'oslo', 'italy':'rome', 'poland':'warsaw', 'austria':'vienna' }
+
+  # country refers to the key, and capital refers to the value
+  for country, capital in europe.items():
+      print(f"the capital of {country} is {capital}")
+```
+
 ### Loop over NumPy Array
 
 The method we used to iterate through a normal Python List would work for 1D arrays, but
@@ -282,3 +293,145 @@ means "N-Dimension Iteration". Let's see this function in action:
   88.4
   68.7
 ```
+
+An additional tip is to add an additional argument `end` to the `print()` call. This adds
+the specified string to the end of the printed outputs. Here are a few types of strings you
+can specify:
+
+| **String** | **Function**                    |
+|------------|---------------------------------|
+| `" "`      | Adds a space behind             |
+| `"\t"`     | Adds a tab/indent behind        |
+| `"\n"`     | Starts the cursor on a new line |
+
+### Loop over Pandas DataFrame
+
+For the last time, we will refer to our dear friend, `brics` (a Pandas DataFrame).
+
+```console
+           country     capital    area   population
+  BR        Brazil    Brasília   8.516       200.40
+  RU        Russia      Moscow  17.100       143.50
+  IN         India   New Delhi   3.286      1252.00
+  CH         China     Beijing   9.597      1357.00
+  SA  South Africa    Pretoria   1.221        52.98
+```
+
+So how would we iterate through the DataFrame? Hmm for a first try, let's try this:
+
+```python
+  for val in brics:
+      print(val)
+```
+
+```console
+  country
+  capital
+  area
+  population
+```
+
+It seems we got the column names in return. Interesting! But not quite iterating through
+all the values.
+
+In Pandas, we have to be explicit and mention that we want to iterate over the rows. To do
+this, we call the `iterrows()` method on the DataFrame.
+
+```python
+  for label, row in brics.iterrows():
+      print(label)
+      print(row)
+```
+
+The `iterrows()` method looks at the DataFrame, and on each iteration generates two pieces
+of data: the label of the row and then the actual data in the row as a Pandas Series. Since
+`row` is a Pandas Series, we can easily select additional information from it using the
+subsetting techniques we covered earlier.
+
+```console
+  BR
+  country      Brazil
+  capital    Brasilia
+  area          8.516
+  population    200.4
+  Name: BR, dtype: object
+  ...
+```
+
+As we can clearly see here, the `label` is first printed out, then the `row` is printed
+out.
+
+If we want to selectively print certain data from the Series, we can just select them:
+
+```python
+  for label, row in brics.iterrows():
+      # select capital
+      print(lab + ": " + row["capital"])
+```
+
+```console
+  BR: Brasilia
+  RU: Moscow
+  IN: New Delhi
+  CH: Beijing
+  SA: Pretoria
+```
+
+#### Adding new columns
+
+To do this, we have to make use of many of the ideas we touched on previously! Let us break
+this down into steps.
+
+1. We use... (no surprises here) a for loop! The specification for the for loop can be the
+same, as we will need both the row label and the row data.
+
+```python
+  for lab, row in brics.iterrows():
+      # fill in content here
+```
+
+2. We can calculate the length of each country name by selecting each country name from
+`row`, and apply the `len()` function.
+3. This is arguably the most important step: storing the data in the correct place! Here,
+we used the `loc[]` method (which is label-based), and we stored the data at the
+intersection between the row label `row`, and the column label `"name_length"`.
+
+```python
+  for lab, row in brics.iterrows():
+      # creating one entry of the new Series on every iteration
+      brics.loc[lab, "name_length"] = len(row["country"])
+
+  # print(brics)
+```
+
+To check if our code worked, uncomment the `print(brics)` statement when you run this code!
+*(remember to first import pandas and declare brics properly)* Here's the print out for you:
+
+```console
+           country     capital    area   population   name_length
+  BR        Brazil    Brasília   8.516       200.40             6
+  RU        Russia      Moscow  17.100       143.50             6
+  IN         India   New Delhi   3.286      1252.00             5
+  CH         China     Beijing   9.597      1357.00             5
+  SA  South Africa    Pretoria   1.221        52.98            12
+```
+
+It worked! (Kind of.) It isn't very efficient though, because we're creating a Series object
+(for each row) during each iteration of the for loop. It would not matter for small
+DataFrames like `brics`, but for larger datasets... well we would not recommend this. What
+should we use then?
+
+#### `apply()` method
+
+Lo and behold, the `apply()` method. This method allows you to apply a function on a
+particular column of a DataFrame in an element-wise fashion. In our `brics` example, having
+this in our toolkit means we don't even have to use for loops anymore!
+
+```python
+  brics["name_length"] = brics["country"].apply(len)
+```
+
+What we are doing here, is we first select the entire `"country"` column, and then apply
+the `len` function on this column, and finally we store it in the `"name_length"` column
+in `brics`. Since this new column did not exist beforehand, similar to a dictionary,
+this new column would be created and added to the DataFrame!

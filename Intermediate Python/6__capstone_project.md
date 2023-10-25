@@ -75,7 +75,7 @@ If we run this function, we get a number between 0 and 1.
 >   0.28613933495037946
 > ```
 >
-> we get the same exact random numbers! For the same seed, you are generating the same
+> We get the same exact random numbers! For the same seed, you are generating the same
 > random numbers. This is why it is called "pseudo-random" - it is random but consistent
 > between runs. This ensures *reproducibility as other people can reproduce our analysis.
 >
@@ -168,12 +168,12 @@ instance of the game? How would we modify our code?
       coin = np.random.randint(0, 2)
 
       # instead of an if statement, we append the result of the coin flip each time
-      # by adding the value of `coin` to the previous seen instant since we defined
+      # by adding the value of `coin` to the previously seen instant since we defined
       # `coin == 1` to be tails
       tails.append(tails[x] + coin)
 ```
 
-This edited version will do the trick! I'll explain it, not to worry.
+This edited version will do the trick! I'll explain it, don't worry.
 
 1. `tails` is initialised as a list with one element - 0, since before any coins are
 flipped, we would not have seen any tails.
@@ -393,7 +393,7 @@ walk process multiple times, and use a list to store all these results.
   import numpy as np
   np.random.seed(100)
 
-  # list to store all results
+  # a list to store all results
   all_walks = []
 
   # simulate random walk 5 times
@@ -417,7 +417,7 @@ walk process multiple times, and use a list to store all these results.
       # append random_walk to all_walks
       all_walks.append(random_walk)
 
-  # print all_walks to see results
+  # print all_walks to see the results
   print(all_walks)
 ```
 
@@ -428,7 +428,7 @@ plots come alive - they become more interesting!
 
 ```python
   # here, we assume all the previous code has been implemented
-  # and all_walks have been set-up properly
+  # and all_walks have been set up properly
 
   np_aw = np.array(all_walks)
   plt.plot(np_aw)
@@ -462,7 +462,7 @@ than or equal to 0.001.
   import numpy as np
   np.random.seed(100)
 
-  # list to store all results
+  # a list to store all results
   all_walks = []
 
   # simulate random walk 20 times
@@ -508,10 +508,10 @@ histogram.
   # and all_walks has been set up already
   np_aw_t = np.transpose(np.array(all_walks))
 
-  # select last row from np_aw_t because it is the end point of all the walks
+  # select the last row from np_aw_t because it is the end point of all the walks
   ends = np_aw_t[-1, :]
 
-  # plot histogram of ends and display the plot
+  # plot a histogram of ends and display the plot
   plt.hist(ends)
   plt.show()
 ```
@@ -531,4 +531,4 @@ to 60.
 ## Wrapping Up
 
 This concludes the capstone project! This set of notes would not have covered everything
-that Pandas, NumPy, Matplotlib can do, so do explore on your own!
+that Pandas, NumPy and Matplotlib can do, so do explore on your own!

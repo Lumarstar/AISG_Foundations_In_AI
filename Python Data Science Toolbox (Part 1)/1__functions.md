@@ -3,7 +3,7 @@
 ## Built-in functions
 
 Built-in functions are functions defined by Python. They can be used directly in a Python
-program without importing any external libraries. 
+program without importing any external libraries.
 
 ## User-defined functions
 
@@ -94,6 +94,18 @@ Now we can assign some variable to the result of the function call.
 
 ```console
   16
+```
+
+If you assign a variable to a function without a return value, the variable will be of type
+`NoneType`.
+
+```python
+  var = print(1)    # print() function does not return anything
+  type(var)
+```
+
+```console
+  NoneType
 ```
 
 ### Docstrings

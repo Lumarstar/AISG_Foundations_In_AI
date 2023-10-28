@@ -45,6 +45,8 @@ This should yield the value of `4 ** 2`.
 
 ### Function parameters
 
+#### Single parameters
+
 What if we wanted to square any other number besides 4? To add that functionality, we add
 a parameter to the function definition in between the parentheses.
 
@@ -70,7 +72,34 @@ When we call a function with parameters, we have to add arguments.
 > function, we write parameters in the function header. When we call a function, we pass
 > arguments into the function.
 
+#### Multiple parameters
+
+Our functions can be made to accept more than one parameter. Suppose that, instead of
+just simply squaring a value like we did with `square()`, we wanted to raise a value to
+the power of another. We can change our function definition to reflect that!
+
+```python
+  def raise_to_power(value1, value2):    # <- should change function name too
+      """Raise value1 to the power of value2."""    # <- docstring should reflect change
+      new_value = value1 ** value2
+      return new_value
+```
+
+Now, when we call this function, we need to provide it with two arguments. Essentially,
+the number of arguments when calling a function = the number of parameters it has.
+
+```python
+  result = raise_to_power(2, 3)    # 2 ** 3
+  print(result)
+```
+
+```console
+  8
+```
+
 ### Returning values
+
+#### Single return values
 
 The function `square()` now accepts a single parameter and prints out its squared value.
 However, what if we do not want to print that value directly and instead want to return
@@ -106,6 +135,82 @@ If you assign a variable to a function without a return value, the variable will
 
 ```console
   NoneType
+```
+
+#### Tuples
+
+Before we touch on multiple return values, we have to first learn tuples.
+
+Tuples are a data type in Python. They are like a list as they can contain multiple values.
+They are also immutable - their values cannot be modified. Lastly, they are constructed
+using parentheses `()` and commas.
+
+```python
+  my_tuple = (1, 2, 3)
+  my_list = [1, 2, 3]
+  print(type(my_tuple))
+  print(type(my_list))
+```
+
+```console
+  <class 'tuple'>
+  <class 'list'>
+```
+
+We can also unpack our tuple values into multiple variables in the same line.
+
+```python
+  my_tuple = (1, 2, 3)
+  a, b, c = my_tuple
+```
+
+This assigns `a`, `b` and `c` values in order of how they appear in the tuple.
+
+```python
+  print(a)
+  print(b)
+  print(c)
+```
+
+```console
+  2
+  4
+  6
+```
+
+To access tuple elements, we do the same indexing magic as we did with lists. Tuples also
+use zero-indexing!
+
+```python
+  my_tuple = (1, 2, 3)
+  print(my_tuple[0])
+```
+
+```console
+  1
+```
+
+#### Multiple return values
+
+To illustrate this concept, let us modify our `raise_to_power` function.
+
+```python
+  def raise_both(val1, val2):
+      """Raise val1 to the power of val2 and vice versa"""
+      new_val1 = val1 ** val2
+      new_val2 = val2 ** val1
+
+      new_tuple = (new_val1, new_val2)    # a tuple is used to return multiple values
+      return new_tuple
+```
+
+```python
+  result = raise_both(2, 3)
+  print(result)
+```
+
+```console
+  (8, 9)
 ```
 
 ### Docstrings

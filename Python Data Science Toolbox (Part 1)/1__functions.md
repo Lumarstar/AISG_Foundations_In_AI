@@ -355,7 +355,9 @@ the value when the function is defined.
 ```
 
 To recap, when we reference a name, first the local scope is searched, then the global.
-If the name is in neither, then the built-in scope is searched.
+If the name is in neither, then the built-in scope is searched. By the way, Python's
+built-in scope is just a built-in module called `builtins`. To query this module, we have
+to import the module.
 
 How about altering the values of global names within a function call? This is where the
 `global` keyword comes in. Let's take a look at an example:

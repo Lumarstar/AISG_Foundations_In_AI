@@ -229,3 +229,89 @@ triple quotation marks.
       new_value = value ** 2
       return new_value
 ```
+
+## Scope
+
+"There is a (time and) place for everything." Sounds familiar? Surprisingly,
+this applies to Python too! Every object has its "place" in a Python script, and thus
+not all of them are accessible everywhere in a script.
+
+Enter the idea of a *scope* - which part of a program an object or name may be accessed.
+Names refer to the variables, or more generally, objects such as functions that are
+defined in the program.
+
+There are 3 types of scope:
+
+1. Global scope: a name defined in the main body of a script.
+2. Local scope: a name defined within a function. Once the execution of the function
+is done, the name defined within the function ceases to exist.
+3. Built-in scope: names in pre-defined built-in modules
+
+Sounds confusing? Not to worry, here are a couple of examples that hopefully will make this
+clearer for you!
+
+Take a look at our function `square()`.
+
+```python
+  def square(val):
+      """Squares val and returns it"""
+      new_val = val ** 2
+      return new_val
+```
+
+Let's call the function we just defined.
+
+```python
+  square(3)
+```
+
+```console
+  9
+```
+
+Everything works so far! The function `square()` is defined in the global scope and
+could be accessed.
+
+Let's try accessing `new_val`, which is defined within the function.
+
+```python
+  new_val
+```
+
+```console
+  NameError: name 'new_val' is not defined
+```
+
+We see that it is not accessible! This is because it was only defined within the local scope
+of `square()`, so accessing `new_val` outside of `square()` does not make sense.
+
+Now, what if we defined `new_val` once outside (and before) the function?
+
+```python
+  new_val = 10
+
+  def square(val):
+      """Squares val and returns it"""
+      new_val = val ** 2
+      return new_val
+
+  square(3)
+```
+
+```console
+  9
+```
+
+Now, let us try to access `new_val`.
+
+```python
+  new_val
+```
+
+```console
+  10
+```
+
+Now we see, anytime we call the name in the global scope, Python accesses the name in
+the global scope; anytime we call the name in the local scope, Python accesses the name in
+the local scope.

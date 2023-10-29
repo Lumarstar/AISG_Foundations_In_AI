@@ -315,3 +315,83 @@ Now, let us try to access `new_val`.
 Now we see, anytime we call the name in the global scope, Python accesses the name in
 the global scope; anytime we call the name in the local scope, Python accesses the name in
 the local scope.
+
+If Python cannot find the name in the local scope, then it will access the (same) name
+in the global scope.
+
+```python
+  new_val = 10    # global scope
+
+  def square(val):
+      """Returns the square of a number."""
+      new_val2 = new_val ** 2
+      return new_val2
+```
+
+```python
+  square(3)
+```
+
+```console
+  100
+```
+
+As we can see here, we accessed `new_val` defined globally within the function `square()`.
+Note that the global value accessed is the value at the time the function is *called*, not
+the value when the function is defined.
+
+```python
+  new_val = 10
+  square(3)
+  square(5)
+  new_val = 1
+  square(10)
+```
+
+```console
+  100
+  100
+  1
+```
+
+To recap, when we reference a name, first the local scope is searched, then the global.
+If the name is in neither, then the built-in scope is searched.
+
+How about altering the values of global names within a function call? This is where the
+`global` keyword comes in. Let's take a look at an example:
+
+```python
+  new_val = 10
+
+  def square(value):
+      """Returns the square of a number."""
+      global new_val
+      new_val **= 2
+      return new_val
+```
+
+Within the function definition, we use the `global` keyword, followed by the name of the
+global variable we wish to access and alter. In this case, we changed `new_val` to its
+square.
+
+Let's call the function and take a look.
+
+```python
+  square(3)
+```
+
+```console
+  100
+```
+
+The function call works as one would expect. Now calling `new_val`:
+
+```python
+  new_val
+```
+
+```console
+  100
+```
+
+We see that the global value has indeed been squared by running `square()`.

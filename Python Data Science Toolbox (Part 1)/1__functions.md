@@ -359,6 +359,8 @@ If the name is in neither, then the built-in scope is searched. By the way, Pyth
 built-in scope is just a built-in module called `builtins`. To query this module, we have
 to import the module.
 
+### `global` keyword
+
 How about altering the values of global names within a function call? This is where the
 `global` keyword comes in. Let's take a look at an example:
 
@@ -397,3 +399,163 @@ The function call works as one would expect. Now calling `new_val`:
 ```
 
 We see that the global value has indeed been squared by running `square()`.
+
+## Nested functions
+
+We can define functions within functions! This allows us to efficiently repeat processes
+within functions without having to repeat ourselves. For example, say we want to obtain
+the remainder plus five of three values:
+
+```python
+  def mod2plus5(x1, x2, x3):
+      """Returns the remainder plus 5 of three values."""
+      x1_new = x1 % 2 + 5
+      x2_new = x2 % 2 + 5
+      x3_new = x3 % 2 + 5
+
+      return (x1_new, x2_new, x3_new)
+```
+
+The actual content of the function is repeated multiple times... Instead of this, we can
+define a function within `mod2plus5()` (ie a nested function) to aid us with this process:
+
+```python
+  def mod2plus5(x1, x2, x3):
+      """Returns the remainder plus 5 of three values."""
+
+      def inner(x):
+          """Returns the remainder plus 5 of a value."""
+          return x % 2 + 5
+
+      return (inner(x1), inner(x2), inner(x3))
+```
+
+Now, we can instead call the `inner()` function thrice and our job is done. The syntax for
+the inner function is the same as that for any other function. Both these approaches
+will return the same result. The main difference is, that using an inner (helper) function
+allows our processes to be scaled up with relative ease. Meaning that we can repeat the
+process many times without having to repeat ourselves for every instance.
+
+### Returning functions
+
+Nesting functions also allow us to simply return (the inner) function. Here is an example:
+
+```python
+  def raise_val(n):
+      """Return the inner function."""
+
+      def inner(x):
+          """Raise x to the power of n."""
+          raised = x ** n    # n is part of the enclosing function
+          return raised
+
+      return inner
+```
+
+The function `raise_val` takes in an argument `n`, and returns a function that takes in
+another argument `x` and raises it to the power of `n`. Let's break the steps down and show
+it as Python code.
+
+```python
+  # with this line, we can see square defined as:
+  # def square(x):
+  #    raised = x ** 2
+  #    return raised
+  square = raise_val(2)
+
+  # similarly, with this line, we can see cube defined as:
+  # def cube(x):
+  #    raised = x ** 3
+  #    return raised
+  cube = raise_val(3)
+
+  print(square(2), cube(3))
+```
+
+```console
+  4 64
+```
+
+Let's try to digest our findings:
+
+1. Passing the number 2 to `raise_vals` creates a function that squares any number. 
+Similarly, passing the number 3 creates a function that cubes any number.
+2. `square` and `cube` both remember the values of `n` assigned to them, even though
+`n` is local to `raise_val`, and it has finished its execution. This is known as *closure*.
+More can be found [here](https://en.wikipedia.org/wiki/Closure_(computer_programming))
+
+### `nonlocal` keyword
+
+Another cool thing - similar to how we can use `global` to change global variables defined
+in the global scope, we can use the `nonlocal` keyword to create and change names in an
+enclosing scope.
+
+```python
+    def outer():
+        """Prints the value of n."""
+        n = 1
+
+        def inner():
+            nonlocal n    # access n defined outside
+            n = 2    # this changes the value of n, even outside this function
+            print(n)
+
+        print(n)
+        inner()
+        print(n)
+```
+
+```console
+  1
+  2
+  2
+```
+
+### Scope (again)
+
+To summarise, Python will search for the variable/name in this order: 1. Locally;
+2. Any enclosing/outer functions; 3. Globally; 4. Built-in. Let's take a look at an example.
+
+```python
+  global_var = "hello world!"
+
+  def unhappy(sad_text):
+      # sad_text is an enclosing variable
+
+      # feelings is an enclosing variable here
+      feelings = "sad"
+      
+      def cry():
+        shouts = "I am sad because " + sad_text
+        feelings = "horrible"    # feelings here is local to cry
+        print(shouts)
+        print("I feel " + feelings)    # this accesses local feelings
+      
+      # this will not work here as shouts is local to cry()
+      # print(shouts)
+      
+      # this should work
+      print(global_var)
+      cry()
+
+      # this will access the enclosing feelings variable
+      print("I feel " + feelings)
+  
+  # this will not work
+  # print(sad_text)
+  
+  # but this will
+  # list() is a built-in name
+  print(list())
+  
+  # and this will work too
+  unhappy("I broke up.")
+```
+
+```console
+  []
+  hello world!
+  I am sad because I broke up.
+  I feel horrible
+  I feel sad
+```

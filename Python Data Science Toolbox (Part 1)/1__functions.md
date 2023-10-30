@@ -482,7 +482,7 @@ Let's try to digest our findings:
 Similarly, passing the number 3 creates a function that cubes any number.
 2. `square` and `cube` both remember the values of `n` assigned to them, even though
 `n` is local to `raise_val`, and it has finished its execution. This is known as *closure*.
-More can be found [here](https://en.wikipedia.org/wiki/Closure_(computer_programming))
+More can be found [here](https://en.wikipedia.org/wiki/Closure_(computer_programming)).
 
 ### `nonlocal` keyword
 

@@ -559,3 +559,136 @@ To summarise, Python will search for the variable/name in this order: 1. Locally
   I feel horrible
   I feel sad
 ```
+
+## Default arguments
+
+Default arguments are values that parameters will take by default if an argument is not
+provided when the function is called. To add a default argument, we declare a parameter
+with `=value` in the function definition.
+
+```python
+  def power(number, pow=1):    # <- default value of pow is 1
+      """Rause number to the power of pow"""
+      return number ** pow
+```
+
+We can still call the function with 2 arguments, as we'd expect.
+
+```python
+  power(9, 2)
+```
+
+```console
+  81
+```
+
+```python
+  power(9, 1)
+```
+
+```console
+  9
+```
+
+However, if we only use one argument, the function call will use the default argument of 1
+for `pow`!
+
+```python
+  power(9)
+```
+
+```console
+  9
+```
+
+## Flexible arguments
+
+For more information about flexible arguments, refer
+[here](https://realpython.com/python-kwargs-and-args/).
+
+### `*args`
+
+To illustrate the power of this keyword, it's best we look at an example. Let us create a
+simple function to add variables up.
+
+```python
+  def sum_all(a, b):
+      return a + b
+```
+
+This is a simple function that works as intended - it takes sums! But it seems a little
+limited. After all, our function is called `sum_all`, but as of now we only can sum 2
+variables. How about using a list?
+
+```python
+  def sum_all(list_of_vals):
+      result = 0
+
+      for num in list_of_vals:
+          result += num
+
+      return result
+
+  my_list = [1, 2, 3]
+  sum_all(my_list)
+```
+
+```console
+  6
+```
+
+This works as intended too! Now, we just need to create a list to use this function. But,
+it'd be nice if we did not need to define the list just to use this function... Enter the
+`*args` argument.
+
+This keyword allows any number of arguments to be specified if it is defined as a parameter
+in the function definition. We denote this using `*`. Using this in our `sum_all` function:
+
+```python
+  def sum_all(*args):
+      result = 0
+
+      for num in args:
+          result += num
+
+      return result
+```
+
+`args` is a tuple. We can now call `sum_all` with any number of arguments to add them
+all up!
+
+> What is important here is the single star `*` that precedes the parameter name, not the
+> name `args`. In fact, we can use any name we desire, like `*integers`, so long as `*` is
+> in front.
+
+### `**kwargs`
+
+Similar to `*`, we can use the double star `**` to pass in an arbitrary number of
+keyword functions (also known as kwargs), which are arguments preceded by identifiers.
+
+To write such a function, we use the parameter `kwargs` preceded by a double star
+(`**kwargs`). This turns the identifier-keyword pairs that we will give as arguments
+into a dictionary within the function body.
+
+```python
+  def print_all(**kwargs):
+      """Print out key-value pairs in **kwargs"""
+      for key, value in kwargs.items():
+          print(key + ": " + value)
+```
+
+Using our newly defined `print_all` function, we now can print out the identifier-keyword
+(ie parameter-value) pairs we gave!
+
+```python
+  print_all(name="En Hao", job="SCH V Trainer", is_happy="No")
+```
+
+```console
+  name: En Hao
+  job: SCH V Trainer
+  is_happy: No
+```
+
+> What is important is the double star `**`, not the name `kwargs`. So long as `**` is at
+> the front, we can use any name we want.

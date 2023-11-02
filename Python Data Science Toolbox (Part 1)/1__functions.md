@@ -692,3 +692,64 @@ Using our newly defined `print_all` function, we now can print out the identifie
 
 > What is important is the double star `**`, not the name `kwargs`. So long as `**` is at
 > the front, we can use any name we want.
+
+## Lambda functions
+
+Lambda functions are convenient tools we can use to write functions on the fly. Let us take
+a look at an example:
+
+```python
+  raise_to_power = lambda x, y: x ** y
+  raise_to_power(2, 3)
+```
+
+```console
+  8
+```
+
+1. We used the `lambda` keyword to define the lambda function.
+2. After the keyword, we specified the names of the arguments for this function, followed
+by a colon.
+3. Lastly, this is followed by the expression we want to make.
+
+Lambda functions are especially useful when we want to use anonymous functions. (To many,
+"anonymous function" and "lambda function" are largely synonymous.)
+
+To illustrate this, we will look at two Python functions - `map()` and `filter()`.
+
+### `map()`
+
+This function takes in 2 arguments - `map(func, seq)`. It applies the function `func`
+to **all** elements in the sequence `seq`.
+You may have guessed where lambda functions
+come in. Yes, we do not even have to name the lambda function! We can just declare it
+inside `map()`, like in this example.
+
+```python
+  nums = [1, 2, 3]
+  square_all = map(lambda num: num ** 2, nums)
+  print(square_all)
+```
+
+```python
+  <map object at 0x103e065c0>
+```
+
+Upon printing `square_all`, we realised that it is actually a map object! (Don't worry
+about the hexadecimal number. It represents the location in memory the object
+is stored at.)
+
+To see what the object contains, we have to *typecast* it into a list object.
+
+```python
+  print(list(square_all))
+```
+
+```console
+  [1, 4, 9]
+```
+
+As expected, it is a list containing all
+the original values squared!
+
+### `filter()`

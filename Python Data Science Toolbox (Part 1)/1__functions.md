@@ -731,7 +731,7 @@ inside `map()`, like in this example.
   print(square_all)
 ```
 
-```python
+```console
   <map object at 0x103e065c0>
 ```
 

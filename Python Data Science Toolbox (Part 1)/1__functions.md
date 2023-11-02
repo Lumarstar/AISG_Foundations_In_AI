@@ -695,8 +695,10 @@ Using our newly defined `print_all` function, we now can print out the identifie
 
 ## Lambda functions
 
-Lambda functions are convenient tools we can use to write functions on the fly. Let us take
-a look at an example:
+Lambda functions are convenient tools we can use to write functions on the fly. For lambda
+functions, they are not stored in the environment with `def`.
+
+Let us take a look at an example:
 
 ```python
   raise_to_power = lambda x, y: x ** y

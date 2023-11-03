@@ -756,7 +756,7 @@ the original values squared!
 
 ### `filter()`
 
-This function filters out elements from a sequence based on a criteria. It takes in two
+This function filters out elements from a sequence based on a criterion. It takes in two
 arguments - `filter(func, seq)`, where `func` is the function that serves as the criteria,
 and `seq` is the sequence to be filtered.
 
@@ -767,8 +767,8 @@ from the Lord of The Rings (good read btw).
   fellowship = ['frodo', 'samwise', 'merry', 'pippin', 'aragorn', 'boromir', 'legolas', 'gimli', 'gandalf']
 ```
 
-We want to get the names of members with names longer than 6 characters. Using the `filter()`
-function,
+We want to get the names of members with names longer than 6 characters. Using the
+`filter()` function,
 
 ```python
   result = filter(lambda s: len(s) > 6, fellowship)

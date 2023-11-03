@@ -819,9 +819,7 @@ Here's how we will do it:
   from functools import reduce
 
   stark = ['robb', 'sansa', 'arya', 'brandon', 'rickon']
-
   result = reduce(lambda a, b: a + b, stark)
-
   print(result)
 ```
 

@@ -755,3 +755,14 @@ As expected, it is a list containing all
 the original values squared!
 
 ### `filter()`
+
+This function filters out elements from a sequence based on a criteria. It takes in two
+arguments - `filter(func, seq)`, where `func` is the function that serves as the criteria,
+and `seq` is the sequence to be filtered.
+
+Again, here is an example for you! Here, we have a list of members of the fellowship
+from the Lord of The Rings (good read btw).
+
+```python
+  fellowship = ['frodo', 'samwise', 'merry', 'pippin', 'aragorn', 'boromir', 'legolas', 'gimli', 'gandalf']
+```

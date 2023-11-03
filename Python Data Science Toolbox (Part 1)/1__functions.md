@@ -766,3 +766,65 @@ from the Lord of The Rings (good read btw).
 ```python
   fellowship = ['frodo', 'samwise', 'merry', 'pippin', 'aragorn', 'boromir', 'legolas', 'gimli', 'gandalf']
 ```
+
+We want to get the names of members with names longer than 6 characters. Using the `filter()`
+function,
+
+```python
+  result = filter(lambda s: len(s) > 6, fellowship)
+  print(result)
+```
+
+```console
+  <filter object at 0x7f5fd8193f40>
+```
+
+Similar to `map()`, the `filter()` function returns a filter object. To see our
+actual results, we need to, again, *typecast* into a list:
+
+```python
+  print(list(result))
+```
+
+```console
+  ['samwise', 'aragorn', 'boromir', 'legolas', 'gandalf']
+```
+
+### `reduce()`
+
+The `reduce()` function takes in two arguments - `reduce(func, seq)`. What makes it
+different from `map()` is instead of applying it directly to all elements of the
+list like `map()` does, `reduce()` first applies the function on the first two elements.
+Then, it'll apply the function on the combined result and the third element, and so on.
+This will be repeated until all elements are combined and no elements are left. This
+combined result will be returned at the end as the result! Thus the returned value is
+a single value.
+
+In order to use `reduce()`, we must import it from the `functools` module.
+
+Say for instance, we want to implement `gibberish()` using `reduce()` and `lambda`:
+
+```python
+  def gibberish(*args):
+      """Concatenate strings in *args together."""
+      hodgepodge = ''
+      for word in args:
+          hodgepodge += word
+      return hodgepodge
+```
+
+Here's how we will do it:
+
+```python
+  from functools import reduce
+
+  stark = ['robb', 'sansa', 'arya', 'brandon', 'rickon']
+
+  result = reduce(lambda a, b: a + b, stark)
+
+  print(result)
+```
+
+```console
+  robbsansaaryabrandonrickon
+```

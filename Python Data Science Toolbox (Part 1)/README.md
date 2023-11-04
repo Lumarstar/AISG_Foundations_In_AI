@@ -19,3 +19,18 @@ default arguments and variable-length arguments. You’ll gain insight into scop
 - Apply learned functions to answer data science questions
 
 ## Table of Contents
+
+### [Functions](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Python%20Data%20Science%20Toolbox%20(Part%201)/1__functions.md#functions)
+
+- [Built-in functions](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Python%20Data%20Science%20Toolbox%20(Part%201)/1__functions.md#built-in-functions)
+- [User-defined functions](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Python%20Data%20Science%20Toolbox%20(Part%201)/1__functions.md#user-defined-functions)
+- [Scope](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Python%20Data%20Science%20Toolbox%20(Part%201)/1__functions.md#scope)
+- [Nested functions](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Python%20Data%20Science%20Toolbox%20(Part%201)/1__functions.md#nested-functions)
+- [Default arguments](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Python%20Data%20Science%20Toolbox%20(Part%201)/1__functions.md#default-arguments)
+- [Flexible arguments](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Python%20Data%20Science%20Toolbox%20(Part%201)/1__functions.md#flexible-arguments)
+- [Lambda functions](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Python%20Data%20Science%20Toolbox%20(Part%201)/1__functions.md#lambda-functions)
+
+### [Error Handling](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Python%20Data%20Science%20Toolbox%20(Part%201)/2__error_handling.md#error-handling)
+
+- [Errors](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Python%20Data%20Science%20Toolbox%20(Part%201)/2__error_handling.md#errors)
+- [Handling Errors](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Python%20Data%20Science%20Toolbox%20(Part%201)/2__error_handling.md#handling-errors)

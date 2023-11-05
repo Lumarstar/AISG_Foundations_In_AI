@@ -111,3 +111,106 @@ short_song.txt
   This is a short song.
   This is the last line.
 ```
+
+## Useful functions with iterators
+
+### `enumerate()`
+
+`enumerate()` takes in any *iterable* as an argument, such as a list, and returns a special
+enumerate object, which consists of pairs containing the elements of the original iterable,
+along with their index within the iterable.
+
+We can use `list()` to typecast this object into a list of tuples. Not only that, the
+special enumerate object is also an iterable and we can unpack its values using a `for`
+loop.
+
+```python
+  hello = ['hi', 'nihao', 'konnichiwa']
+  for index, value in enumerate(hello):
+      print(index, value)
+```
+
+```console
+  0 hi
+  1 nihao
+  2 konnichiwa
+```
+
+`enumerate()` actually takes in 2 arguments - `enumerate(iterable[, start=0])`. If we change
+the value assigned to `start`, the indexing will start from that value.
+
+```python
+  for index, value in enumerate(hello, start=10):
+      print(index, value)
+```
+
+```console
+  10 hi
+  11 nihao
+  12 konnichiwa
+```
+
+### `zip()`
+
+`zip()` accepts an arbitrary number of iterables and returns an iterator of tuples. The
+tuple at index `i` will contain all the elements in each of the iterables at index `i`.
+
+Zipping the iterables together creates a zip object which is an iterator of tuples.
+
+Say we have two lists, `one` and `two`.
+
+```python
+  one = [1, 2, 3]
+  two = [4, 5, 6]
+```
+
+```python
+  z = zip(one, two)
+  print(type(z))
+```
+
+```console
+  <class 'zip'>
+```
+
+By zipping the two lists `one` and `two` together, we have created a zip object. We can
+typecast this into a list and print it to see its contents:
+
+```python
+  z_list = list(z)
+  print(z_list)
+```
+
+```console
+  [(1, 4), (2, 5), (3, 6)]
+```
+
+The first element is a tuple containing the first elements of each list that was zipped.
+The second element is a tuple containing the second elements, and so on. This aligns nicely
+with what we discussed before - The tuple at index `i` will contain all the elements in
+each of the iterables at index `i`.
+
+Alternatively, we can use a `for` loop to loop through the zip object.
+
+```python
+  for z1, z2 in zip(one, two):
+      print(z1, z2)
+```
+
+```console
+  1 4
+  2 5
+  3 6
+```
+
+We could also use the splat operator `*` to print out all the elements, just like any other
+iterator!
+
+```python
+  z = zip(one, two)
+  print(*z)
+```
+
+```console
+  (1, 4) (2, 5) (3, 6)
+```

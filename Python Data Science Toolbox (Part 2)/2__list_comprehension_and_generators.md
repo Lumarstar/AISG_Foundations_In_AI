@@ -147,3 +147,160 @@ Take a look at this example!
 
 Here, we created a dictionary that creates key-value pairs by assigning the negative of
 the key as our value.
+
+## Generators
+
+A generator is like a list comprehension except it does not store the list in memory - it
+does not construct the list, but returns a generator object we can iterate over to produce
+elements of the list as required.
+
+A generator is defined using `()` instead of `[]`, but the inner workings are still the
+same.
+
+```python
+  my_list = [num for num in range(6)]
+  my_generator = (num for num in range(6))
+
+  print(type(my_list))
+  print(type(my_generator))
+```
+
+```console
+  <class 'list'>
+  <class 'generator'>
+```
+
+We can still loop over a generator expression, as well as pass it into `list()` to create
+the list.
+
+```python
+  for num in my_generator:
+      print(num)
+```
+
+```console
+  0
+  1
+  2
+  3
+  4
+  5
+```
+
+```python
+  print(list(my_generator))
+```
+
+```console
+  [0, 1, 2, 3, 4, 5]
+```
+
+Like any other iterator, we can pass a generator into `next()` to iterate through its
+elements.
+
+```python
+  print(next(my_generator))
+  print(next(my_generator))
+  print(next(my_generator))
+  print(next(my_generator))
+  print(next(my_generator))
+  print(next(my_generator))
+```
+
+```console
+  0
+  1
+  2
+  3
+  4
+  5
+```
+
+This is an example of *lazy evaluation*, where the evaluation of the expression is
+delayed until its value is needed. This is extremely useful when working with extremely
+large sequences as we do not want to store the entire list in memory (and usually we are
+not able to because we do not have enough memory) - which is what comprehensions do.
+
+The main point about generators is that it allows us to generate elements of the sequence
+on the fly.
+
+To show this advantage of generators, let us imagine trying to iterate over a very large
+sequence of numbers.
+
+```python
+  fail = [num for num in range(10 ** 1000000)]
+```
+
+If we execute this code (please don't), your device will crash because there is not enough
+memory to store this.
+
+On the other hand, if we create the analogous generator object instead:
+
+```python
+  pass = (num for num in range(10 ** 1000000))
+```
+
+```console
+  <generator object <genexpr> at 0x7f8c2447a7d8>
+```
+
+It works! Because when we create a generator, it does not try to create the entire list
+at one go.
+
+Additionally, anything we can do with list comprehension, we can also do with generators!
+This means stuff like filtering and applying conditionals are possible with generator
+expressions too!
+
+### Generator functions
+
+Generator functions are functions that produce generator objects when called. They are
+written with the syntax of any other user-defined function, but with a catch - instead
+of returning values via the `return` keyword, they *yield sequences of values* using the
+keyword `yield`.
+
+Take a look at this generator function that, when called with some number `n`, produces
+a generator object that generates integers 0 through `n`.
+
+```python
+  def num_seq(n):
+      """Generate values from 0 to n."""
+      i = 0
+      while i < n:
+          yield i
+          i += 1
+```
+
+We can see within the function definition that `i` is initialized to 0 and that the first
+time the generator object is called, it yields `i` equal to 0. It then adds one to `i` and will then yield one on the next iteration and so on. The `while` loop is `True` until `i`
+equals `n` and then the generator ceases to yield values.
+
+This generator function can be called as we do any other function, and it will return a
+generator object which yielded values from 0 to `n`.
+
+```python
+  res = num_seq(5)
+  print(type(result))
+```
+
+```console
+  <class 'generator'>
+```
+
+We can iterate over this generator object with a `for` loop to print the values it yields.
+
+```python
+  for item in res:
+    print(item)
+```
+
+```console
+  0
+  1
+  2
+  3
+  4
+```
+
+In short, generator functions are a powerful and customisable way to create generators!
+Click [here](https://realpython.com/introduction-to-python-generators/#using-generators)
+for more information on generators and generator functions!

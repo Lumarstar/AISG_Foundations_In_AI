@@ -290,7 +290,7 @@ We can iterate over this generator object with a `for` loop to print the values 
 
 ```python
   for item in res:
-    print(item)
+      print(item)
 ```
 
 ```console

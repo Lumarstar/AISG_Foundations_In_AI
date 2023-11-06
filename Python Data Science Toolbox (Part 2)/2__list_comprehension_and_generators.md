@@ -98,7 +98,7 @@ everything and writing readable code.
 More information about list comprehension can be found
 [here](https://pythonexamples.org/python-list-comprehension-multiple-if-conditions/).
 
-## Conditionals in comprehensions
+### Conditionals in comprehensions
 
 We can also use (more than one, if needed) conditionals in comprehensions.
 
@@ -129,7 +129,7 @@ The `else` clause allows us to specify that for odd integers, we output 0. If th
 `else` clause, the `if` statement is behind the `for` clause. If there is an `else` clause,
 the `if`-`else` statement will go before the `for` loop.
 
-## Conditionals in dictionaries
+## Comprehensions in dictionaries
 
 We can use comprehension to create new dictionaries! As per the definition, dictionaries are
 defined with curly brackets `{}` and key=value pairs are separated by colons `:`.

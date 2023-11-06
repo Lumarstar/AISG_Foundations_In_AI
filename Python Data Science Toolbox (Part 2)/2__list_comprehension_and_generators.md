@@ -97,3 +97,51 @@ everything and writing readable code.
 
 More information about list comprehension can be found
 [here](https://pythonexamples.org/python-list-comprehension-multiple-if-conditions/).
+
+## Conditionals in comprehensions
+
+We can also use (more than one, if needed) conditionals in comprehensions.
+
+```python
+  even_squares = [num ** 2 for num in range(10) if num % 2 == 0]
+  print(even_squares)
+```
+
+```console
+  [0, 4, 16, 36, 64]
+```
+
+This simple list comprehension results in a list which contains the square of values in
+`range(10)` under the condition that the value itself is even.
+
+Other than the `if` clause, we can use the `else` clause too!
+
+```python
+  even_squares = [num ** 2 if num % 2 == 0 else 0 for num in range(10)]
+  print(even_squares)
+```
+
+```console
+  [0, 0, 4, 0, 16, 0, 36, 0, 64, 0]
+```
+
+The `else` clause allows us to specify that for odd integers, we output 0.
+
+## Conditionals in dictionaries
+
+We can use comprehension to create new dictionaries! As per the definition, dictionaries are
+defined with curly brackets `{}` and key=value pairs are separated by colons `:`.
+
+Take a look at this example!
+
+```python
+  pos_neg = {num: -num for num in range(5)}
+  print(pos_neg)
+```
+
+```console
+  {0: 0, 1: -1, 2: -2, 3: -3, 4: -4}
+```
+
+Here, we created a dictionary that creates key-value pairs by assigning the negative of
+the key as our value.

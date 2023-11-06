@@ -1,0 +1,28 @@
+# List Comprehension and Generators
+
+## List comprehensions
+
+We have previously learnt to use `for` loops to populate lists. In this scenario, we
+want to create a new list from an old list of numbers, and increase their values by 1.
+
+```python
+  nums = [1, 2, 3]
+  new_nums = []
+
+  for num in nums:
+      new_nums.append(num + 1)
+
+  print(new_nums)
+```
+
+```console
+  [2, 3, 4]
+```
+
+However, `for` loops are "inefficient" as compared to using list comprehension, which
+is faster and neater.
+
+Here's how to use it:
+
+1. Set up square brackets `[]`
+2. Within the square brackets, 

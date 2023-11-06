@@ -215,5 +215,26 @@ iterator!
   (1, 4) (2, 5) (3, 6)
 ```
 
-We can think of `*` as unzipping what has been previously `zip`ped. `*` unpacks an iterable
+We can also use`*` to unzip what has been previously `zip`ped. `*` unpacks an iterable
 such as a list or a tuple into positional arguments in a function call.
+
+```python
+  one = (1, 2, 3)
+  two = (4, 5, 6)
+
+  z = zip(one, two)
+
+  # unzipping process
+  res1, res2 = zip(*z)
+
+  print(res1 == one)
+  print(res2 == two)
+```
+
+```console
+  True
+  True
+```
+
+When we unpack `z`, it will return `(1, 4) (2, 5) (3, 6)`. So, if we zip this, then we
+will get 2 tuples in return: `(1, 2, 3) (4, 5, 6)` which were what we had originally!

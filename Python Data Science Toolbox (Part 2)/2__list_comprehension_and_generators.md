@@ -216,6 +216,39 @@ elements.
   5
 ```
 
+> A cool thing to point out is, after all these `next()` function calls, if we then use
+> a `for` loop, it will continue from the latest element that has not been accessed.
+> Take a look at this example!
+>
+> ```python
+>   result = ((num for num in range(11))
+>
+>   print(next(result))
+>   print(next(result))
+>   print(next(result))
+>   print(next(result))
+>   print(next(result))
+>   print()
+>
+>   for value in result:
+>       print(value)
+> ```
+>
+> ```console
+> 0
+> 1
+> 2
+> 3
+> 4
+> 
+> 5
+> 6
+> 7
+> 8
+> 9
+> 10
+> ```
+
 This is an example of *lazy evaluation*, where the evaluation of the expression is
 delayed until its value is needed. This is extremely useful when working with extremely
 large sequences as we do not want to store the entire list in memory (and usually we are

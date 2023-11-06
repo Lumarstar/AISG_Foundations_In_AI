@@ -214,3 +214,6 @@ iterator!
 ```console
   (1, 4) (2, 5) (3, 6)
 ```
+
+We can think of `*` as unzipping what has been previously `zip`ped. `*` unpacks an iterable
+such as a list or a tuple into positional arguments in a function call.

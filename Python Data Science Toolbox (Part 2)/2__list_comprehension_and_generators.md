@@ -125,9 +125,12 @@ Other than the `if` clause, we can use the `else` clause too!
   [0, 0, 4, 0, 16, 0, 36, 0, 64, 0]
 ```
 
-The `else` clause allows us to specify that for odd integers, we output 0. If there is no
-`else` clause, the `if` statement is behind the `for` clause. If there is an `else` clause,
-the `if`-`else` statement will go before the `for` loop.
+The `else` clause allows us to specify that for odd integers, we output 0.
+
+In general, list comprehensions would follow this syntax:
+
+`[<output expression> <conditionals on output> <for clause> <conditional on 
+for iterable>]`
 
 ## Comprehensions in dictionaries
 

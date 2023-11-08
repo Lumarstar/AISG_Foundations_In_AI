@@ -340,3 +340,11 @@ We can iterate over this generator object with a `for` loop to print the values 
 In short, generator functions are a powerful and customisable way to create generators!
 Click [here](https://realpython.com/introduction-to-python-generators/#using-generators)
 for more information on generators and generator functions!
+
+### When to use generators
+
+1. Streaming data
+
+When new data is constantly written into a file, using generators to retrieve data is
+very
+useful.

@@ -203,6 +203,16 @@ Alternatively, we can use a `for` loop to loop through the zip object.
   3 6
 ```
 
+We can also typecast the zip object into a dictionary:
+
+```python
+  print(dict(zip(one, two)))
+```
+
+```console
+  {1: 4, 2: 5, 3: 6}
+```
+
 We could also use the splat operator `*` to print out all the elements, just like any other
 iterator!
 

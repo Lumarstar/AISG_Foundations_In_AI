@@ -20,3 +20,15 @@ parts of this course.
 - Use iterators and lists in a real-world dataset
 
 ## Table of Contents
+
+### [Iterators](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Python%20Data%20Science%20Toolbox%20(Part%202)/1__iterators.md)
+
+- [Iterators? Iterables?](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Python%20Data%20Science%20Toolbox%20(Part%202)/1__iterators.md#iterators-iterables)
+- [Iterating over iterables](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Python%20Data%20Science%20Toolbox%20(Part%202)/1__iterators.md#iterating-over-iterables)
+- [Useful functions with iterators](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Python%20Data%20Science%20Toolbox%20(Part%202)/1__iterators.md#useful-functions-with-iterators)
+
+### [List Comprehension and Generators](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Python%20Data%20Science%20Toolbox%20(Part%202)/2__list_comprehension_and_generators.md)
+
+- [List Comprehensions](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Python%20Data%20Science%20Toolbox%20(Part%202)/2__list_comprehension_and_generators.md#list-comprehensions)
+- [Comprehensions in Dictionaries](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Python%20Data%20Science%20Toolbox%20(Part%202)/2__list_comprehension_and_generators.md#comprehensions-in-dictionaries)
+- [Generators](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Python%20Data%20Science%20Toolbox%20(Part%202)/2__list_comprehension_and_generators.md#generators)

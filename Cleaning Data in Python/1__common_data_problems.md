@@ -233,6 +233,8 @@ inspection, we found ratings that were strangely above 5!
   29  Bleh blessing           6
 ```
 
+#### Dropping Data
+
 Since there is only a small proportion of data affected, we can try dropping the data.
 
 The data can be dropped in two ways:
@@ -256,3 +258,103 @@ create a new column. This can be checked by using an `assert` statement.
 
 ```python
   assert movies["avg_rating"].max() <= 5
+```
+
+This statement should not return anything if data dropping was done correctly.
+
+#### Custom Limits
+
+Depending on the assumptions behind our data, we can also change the out of range data
+to a hard limit. For example, we can set all average ratings above 5 as 5.
+
+```python
+  movies.loc[movies["avg_rating"] > 5, "avg_rating"] = 5
+```
+
+Here, we used the `.loc()` method, which we touched on in previous modules.
+
+To check if this process worked, we can use the same `assert` statement as before. Neat!
+
+### Example: Subscription Dates
+
+We have a DataFrame `user_signups`, which stores the data of users subscribed to
+PirateFlix (hehe).
+
+First, we want to check the data types of data stored in the columns of
+`user_signups`.
+
+```python
+  import datetime as dt
+  import pandas as pd
+
+  user_signups.dtypes
+```
+
+```console
+  subscription_date    object
+  user_name            object
+  Country              object
+  dtype: object
+```
+
+First, we can observe that `user_signups` has three columns. The one we are
+interested in, `subscription_date`, has its data stored as an object, and not a date
+or datetime object.
+
+To compare a Pandas object to dates, we first need to convert the data into dates.
+
+```python
+  user_signups["subscription_date"] = pd.to_datetime(user_signups["subscription_date"]).dt.date
+```
+
+To do this, we first convert the object into a Pandas datetime object using the
+`pd.to_datetime()` function, which takes in the column we want to convert. We then
+convert the Pandas datetime object to a date via `.dt.date`.
+
+Alternatively, we could have directly converted from the Pandas object itself
+without the `to_datetime()` function, but we would have needed to provide
+information about the date's format as a string.
+
+Now that we have the data typecasted as datetime objects, we can do our job now!
+
+We use today's date as our reference point (since you can't subscribe for a service
+with a date later than today).
+
+```python
+  today_date = dt.date.today()
+```
+
+Similar to our previous example, we can either drop out of range data points or
+hardcover them with custom limits.
+
+#### Dropping Data
+
+We will drop all dates that are later than `today_date`.
+
+```python
+  # drop by Filtering
+  user_signups = user_signups[user_signups["subscription_date"] <= today_date]
+
+  # drop values using .drop()
+  user_signups.drop(user_signups[["subscription_date"] > today_date].index, inplace = True)
+```
+
+We can then use an `assert` statement to check if the data is dropped.
+
+```python
+  assert user_signups["subscription_date"].max().date() <= today_date
+```
+
+Small note: we have to add the `.date()` method to ensure that we get a date, not
+a timestamp object.
+
+#### Hardcode dates with upper limit
+
+We will change all dates after today to today's date.
+
+```python
+  user_signups.loc(user_signups["subscription_date"] > today_date, "subscription_date") = today_date
+```
+
+The same assert statement above can be used to verify that all out of range values
+have been edited.

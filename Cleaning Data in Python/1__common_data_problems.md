@@ -187,3 +187,72 @@ more aligned with what you would expect out of categorical data.
   top                     1
   freq                    120
 ```
+
+## Data Range Constraints
+
+Sometimes, we expect data to fall within a certain range. For example, surveys that ask
+respondents to vote a score between 1 and 5. If your collected data shows 6, that's weird
+right? You should not be expecting that! This can be due to errors in data collection
+or other factors.
+
+### Dealing with out of range data
+
+So, how exactly do we deal with out of range data?
+
+1. Dropping data
+
+If the dataset is small enough, we can consider dropping data points that have out
+of range data. However, if there is too much out of range data, we may lose out on
+essential information. Thus, only drop data if only a small proportion of data is
+affected.
+
+2. Setting custom minimums and maximums
+
+This allows you to maintain a specific range that you desire.
+
+3. Treat out of range data as missing and impute
+
+4. Assign custom value depending on business assumptions
+
+We assign custom values for data that go beyond our range.
+
+### Example: Movie Ratings
+
+We start with a Pandas DataFrame `movies`, and the movies are rated on a scale of 1 to
+5. Ratings are stored in a column called `avg_rating`. However, upon closer
+inspection, we found ratings that were strangely above 5!
+
+```python
+  import pandas as pd
+  movies[movies["avg_rating"] > 5]
+```
+
+```console
+        movie_name  avg_rating
+  25  I want to cry           6
+  29  Bleh blessing           6
+```
+
+Since there is only a small proportion of data affected, we can try dropping the data.
+
+The data can be dropped in two ways:
+
+1. create a new filtered `movies` DataFrame where `movies` now only contain
+movies with rating between 1 and 5.
+
+```python
+  movies = movies[movies["avg_rating"] <= 5]
+```
+
+2. drop the values using the `.drop()` method. This method takes in the *row*
+*indices* of `movies` for which `avg_rating` is higher than 5 as the argument.
+
+```python
+  movies.drop(movies[movies["avg_rating"] > 5].index, inplace=True)
+  ```
+
+We set `inplace` to be True so that values are dropped in place and we do not have to
+create a new column. This can be checked by using an `assert` statement.
+
+```python
+  assert movies["avg_rating"].max() <= 5

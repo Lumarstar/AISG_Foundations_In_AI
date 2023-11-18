@@ -358,3 +358,43 @@ We will change all dates after today to today's date.
 
 The same assert statement above can be used to verify that all out of range values
 have been edited.
+
+## Unique Constraints/Duplicate Values
+
+Duplicate values can be diagnosed when we have the same exact information repeated
+across multiple rows in one or more columns.
+
+Here are some reasons why they may happen:
+
+1. Data Entry & Human Error
+
+Sometimes, data might have been entered wrongly the first time, and a new entry is
+created just to change some of the information, but the rest are the same.
+
+2. Bugs and design errors
+
+3. Join or Merge Errors
+
+This is the most common one. Joining or merging databases is a necessary act to
+consolidate data from various resources which could retain duplicate values.
+
+### Finding duplicate values
+
+We can find duplicate in a DataFrame by using the `.duplicated()` method. This
+method returns a Series, with each row being `True` if it is duplicated, and
+`False` if it is unique.
+
+By default, all values are marked as `True` except for the first occurrence.
+
+This however only works if you get duplicates across all columns.
+
+If we do the following, we can see which rows are affected. Assume we have a DataFrame
+`df`:
+
+```python
+  import pandas as pd
+  duplicates = df.duplicated()
+  df[duplicated]
+```
+
+Remember how we used Series of booleans to filter DataFrames? It is exactly the same!

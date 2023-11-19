@@ -407,8 +407,11 @@ To calibrate how we find duplicates, we use 2 arguments from `.duplicated()`:
 
 1. `subset`: the list of column names to check for duplication. For example, it
 allows us to check for duplicates in the first and last column only.
+
 2. `keep`: whether to keep *first* (`"first"`), *last* (`"last"`) or *all*
 (`False`) duplicate values
+
+We can use `.sort_values(by=col_name)` to sort the data to see duplicate values clearer.
 
 ### Treating duplicate values
 
@@ -419,6 +422,57 @@ We can classify duplicates into 2 broad categories:
 These are easier to treat. All that is required is just to keep one of the rows
 and discard the others.
 
-This can be done with the `.drop_duplicates()` method
+This can be done with the `.drop_duplicates()` method. It takes in the
+following arguments:
+
+- `subset`: the list of column names to check for duplication. For example, it
+allows us to check for duplicates in the first and last column only.
+
+- `keep`: whether to keep *first* (`"first"`), *last* (`"last"`) or *all*
+(`False`) duplicate values
+
+- `inplace`: Drop duplicate rows directly inside DataFrame without creating new
+object (`True`)
 
 2. incomplete duplicates: some data in the rows are different, while some are duplicated
+
+Apart from dropping rows with really small discrepancies, we can use statistical
+measures to combine each set of duplicated data. Examples include taking mean or
+maximum. This depends on common sense understanding of the data - what is suitable?
+
+We can easily do this using the `.groupby()` method, which when chained
+with the `.agg()` method, lets us group a set of common columns and return
+statistical values for specific columns when the aggregation is being performed.
+
+For example, say we have a DataFrame `df` that stores the height and weight of
+people. `height` and `weight` are columns in `df`.
+
+To group duplicate values together, we created a dictionary `summary`, that
+instructs `.groupby()` to return the maximum of duplicated rows for `height`,
+and the mean duplicated rows for `weight`.
+
+```python
+  col_names = ["first_name", "last_name", "address"]
+  summary = {"height": "max", "weight": "mean"}
+  df = df.groupby(by=col_name).agg(summary).reset_index()
+```
+
+We grouped `df` by the column names defined in `col_name` and chained it with
+the `.agg()` method, which takes in `summary`. Finally, we add the
+`.reset_index()` method at the end so we can have numbered indices in the final
+output.
+
+To ensure there are no longer duplicated values present, we can use the
+`.duplicated()` method to generate a Series of booleans to output duplicated
+rows from `df`.
+
+```python
+  duplicates = df.duplicated(subset=col_names, keep=False)
+  df[duplicates].sort_values(by="first_name")
+```
+
+```console
+  first_name    last_name    address    height    weight
+```
+
+As we can see, there aren't anymore duplicate rows present!

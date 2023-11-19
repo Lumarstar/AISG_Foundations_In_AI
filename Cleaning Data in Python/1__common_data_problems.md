@@ -384,7 +384,7 @@ We can find duplicate in a DataFrame by using the `.duplicated()` method. This
 method returns a Series, with each row being `True` if it is duplicated, and
 `False` if it is unique.
 
-By default, all values are marked as `True` except for the first occurrence.
+By default, all values are set as `True` except for the first occurrence of each row.
 
 This however only works if you get duplicates across all columns.
 
@@ -398,3 +398,27 @@ If we do the following, we can see which rows are affected. Assume we have a Dat
 ```
 
 Remember how we used Series of booleans to filter DataFrames? It is exactly the same!
+
+If we do not customise the arguments of `.duplicated()`, duplicates rows will only
+be picked out if entire rows are repeated. This limits our ability to diagnose
+duplicate values/types, and how to treat it.
+
+To calibrate how we find duplicates, we use 2 arguments from `.duplicated()`:
+
+1. `subset`: the list of column names to check for duplication. For example, it
+allows us to check for duplicates in the first and last column only.
+2. `keep`: whether to keep *first* (`"first"`), *last* (`"last"`) or *all*
+(`False`) duplicate values
+
+### Treating duplicate values
+
+We can classify duplicates into 2 broad categories:
+
+1. complete duplicates: all data in the rows are entirely the same
+
+These are easier to treat. All that is required is just to keep one of the rows
+and discard the others.
+
+This can be done with the `.drop_duplicates()` method
+
+2. incomplete duplicates: some data in the rows are different, while some are duplicated

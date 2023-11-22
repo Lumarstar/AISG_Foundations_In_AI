@@ -356,7 +356,7 @@ We will change all dates after today to today's date.
   user_signups.loc(user_signups["subscription_date"] > today_date, "subscription_date") = today_date
 ```
 
-The same assert statement above can be used to verify that all out of range values
+The same assert statement above can be used to verify that all out-of-range values
 have been edited.
 
 ## Unique Constraints/Duplicate Values
@@ -380,7 +380,7 @@ consolidate data from various resources which could retain duplicate values.
 
 ### Finding duplicate values
 
-We can find duplicate in a DataFrame by using the `.duplicated()` method. This
+We can find duplicates in a DataFrame by using the `.duplicated()` method. This
 method returns a Series, with each row being `True` if it is duplicated, and
 `False` if it is unique.
 
@@ -399,19 +399,20 @@ If we do the following, we can see which rows are affected. Assume we have a Dat
 
 Remember how we used Series of booleans to filter DataFrames? It is exactly the same!
 
-If we do not customise the arguments of `.duplicated()`, duplicates rows will only
+If we do not customise the arguments of `.duplicated()`, duplicate rows will only
 be picked out if entire rows are repeated. This limits our ability to diagnose
-duplicate values/types, and how to treat it.
+duplicate values/types, and how to treat them.
 
 To calibrate how we find duplicates, we use 2 arguments from `.duplicated()`:
 
 1. `subset`: the list of column names to check for duplication. For example, it
-allows us to check for duplicates in the first and last column only.
+allows us to check for duplicates in the first and last columns only.
 
 2. `keep`: whether to keep *first* (`"first"`), *last* (`"last"`) or *all*
 (`False`) duplicate values
 
-We can use `.sort_values(by=col_name)` to sort the data to see duplicate values clearer.
+We can use `.sort_values(by=col_name)` to sort the data to see duplicate values
+clearly.
 
 ### Treating duplicate values
 
@@ -426,7 +427,7 @@ This can be done with the `.drop_duplicates()` method. It takes in the
 following arguments:
 
 - `subset`: the list of column names to check for duplication. For example, it
-allows us to check for duplicates in the first and last column only.
+allows us to check for duplicates in the first and last columns only.
 
 - `keep`: whether to keep *first* (`"first"`), *last* (`"last"`) or *all*
 (`False`) duplicate values
@@ -434,11 +435,13 @@ allows us to check for duplicates in the first and last column only.
 - `inplace`: Drop duplicate rows directly inside DataFrame without creating new
 object (`True`)
 
-2. incomplete duplicates: some data in the rows are different, while some are duplicated
+2. incomplete duplicates: some data in the rows are different, while some are
+duplicated
 
 Apart from dropping rows with really small discrepancies, we can use statistical
 measures to combine each set of duplicated data. Examples include taking mean or
-maximum. This depends on common sense understanding of the data - what is suitable?
+maximum. This depends on a common sense understanding of the data -
+what is suitable?
 
 We can easily do this using the `.groupby()` method, which when chained
 with the `.agg()` method, lets us group a set of common columns and return

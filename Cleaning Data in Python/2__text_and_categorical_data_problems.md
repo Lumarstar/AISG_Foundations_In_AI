@@ -1,6 +1,6 @@
-# Membership Constraints
+# Text and Categorical Data Problems
 
-## Categorical Data
+## Membership Constraints
 
 ### Context
 

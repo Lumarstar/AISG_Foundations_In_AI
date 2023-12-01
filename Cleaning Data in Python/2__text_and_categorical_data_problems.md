@@ -105,6 +105,13 @@ the `categories` DataFrame. This returns all the categories in `blood_type` that
   {'Z+'}
 ```
 
+> Other than sets, we can also use the `.unique()` method of a DataFrame to get unique
+> values of specific columns in a DataFrame, like so:
+>
+> ```python
+>   dataframe[col].unique()
+> ```
+
 We then find the inconsistent rows by finding all the rows of `blood_type` that are equal
 to the inconsistent categories by using the `.isin` method. This returns a Series of
 boolean values that are `True` for inconsistent rows and `False` for consistent rows.

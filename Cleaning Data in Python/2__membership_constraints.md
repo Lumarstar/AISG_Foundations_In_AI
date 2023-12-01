@@ -91,4 +91,49 @@ returns all the rows containing consistent blood type signs.
 Now we see how to do this in Python!
 
 We first get all inconsistent categories in the `blood_type` column of the `study_data`
-DataFrame. 
+DataFrame by creating a *set (which stores unique values)* out of `blood_type`. Then, 
+we use the `.difference()` method which takes the `blood_type` column as an argument from
+the `categories` DataFrame. This returns all the categories in `blood_type` that are not in
+`categories`.
+
+```python
+  inconsistent_cats = set(study_data['blood_type']).difference(categories['blood_type'])
+  print(inconsistent_cats)
+```
+
+```console
+  {'Z+'}
+```
+
+We then find the inconsistent rows by finding all the rows of `blood_type` that are equal
+to the inconsistent categories by using the `.isin` method. This returns a Series of
+boolean values that are `True` for inconsistent rows and `False` for consistent rows.
+Finally, we subset the `study_data` DataFrame based on these boolean values.
+
+```python
+  inconsistent_rows = study_data['blood_type'].isin(inconsistent_cats)
+  study_data[inconsistent_rows]
+```
+
+```console
+        name   birthday blood_type
+  5 Jennifer 2019-12-17         Z+
+```
+
+The very last step is to drop the values! We just use the tilde symbol `~` while subsetting
+which returns everything except inconsistent rows.
+
+```python
+  inconsistent_data = study_data[inconsistent_rows]
+  consistent_data = study_data[~inconsistent_rows]
+```
+
+```console
+        name   birthday  blood_type
+  1     Beth 2019-10-20          B-
+  2 Ignatius 2020-07-08          A-
+  3     Paul 2019-08-12          O+
+  4    Helen 2019-03-17          O-
+  6  Kennedy 2020-04-27          A+
+  7    Keith 2019-04-19         AB+
+```

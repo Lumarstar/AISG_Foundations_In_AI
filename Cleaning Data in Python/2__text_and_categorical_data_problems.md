@@ -144,3 +144,75 @@ which returns everything except inconsistent rows.
   6  Kennedy 2020-04-27          A+
   7    Keith 2019-04-19         AB+
 ```
+
+## Categorical Variables
+
+### More Errors
+
+When cleaning categorical data, we can encounter other types of errors too. They
+include:
+
+1. Value Inconsistency
+
+- Inconsistent Fields
+- Trailing white spaces
+
+2. Collapsing too many categories to few
+
+- Creating new groups (eg. `0-20K`, `20-40K`, ... from continuous household
+income data)
+- Mapping groups to new ones (eg. Mapping household income categories to only two,
+ie. `rich` and `poor`)
+
+3. Making sure data is of type `category` (refer to first set of notes in this
+series)
+
+### Troubleshooting!
+
+#### (Ensuring) Value Consistency
+
+A common data categorisation problem is having categorical values with different
+types of *capitalisation*.
+
+Here are some examples:
+
+- `married` vs `Married`
+- `UNMARRIED` vs `unmarried`
+
+If we do not treat this, subsequent data analysis will be misleading. Say we have
+a DataFrame `demographics` which stores the marriage status of a population, and
+the categorical values are `unmarried`, `married`, `MARRIED` and `UNMARRIED` (ie.
+inconsistent values)
+
+```python
+  marriage_status = demographics['marriage_status']
+```
+
+```python
+  # this only works on Series.
+  marriage_status.value_counts()
+```
+
+```console
+  unmarried    352
+  married      268
+  MARRIED      204
+  UNMARRIED    176
+```
+
+```python
+  # alternative method for DataFrame: use groupby
+  marriage_status.groupby("marriage_status").count()
+```
+
+```console
+                  household_income  gender
+  marriage_status
+  MARRIED                      204     204
+  UNMARRIED                    176     176
+  married                      268     268
+  unmarried                    352     352
+```
+
+To fix this specific problem, we can either capitalise or lowercase the entire
+`marriage_status` column so the values can be consistent.

@@ -216,3 +216,128 @@ inconsistent values)
 
 To fix this specific problem, we can either capitalise or lowercase the entire
 `marriage_status` column so the values can be consistent.
+
+Another common problem is *trailing spaces*. Using `demographics` from before, here are
+some possible inconsistencies we can see in categorical values:
+
+- ` unmarried` vs `unmarried`
+- `married ` vs `married`
+
+Again, not treating this issue can lead to misleading data analysis as data are not grouped
+together correctly.
+
+Looking at the `marriage_status` column of `demographics`:
+
+```python
+  marriage_status = demographics['marriage_status']
+  marriage_status.value_counts()
+```
+
+```console
+   unmarried    352
+  unmarried     268
+  married       204
+  married       176
+```
+
+*Note that there is a trailing space on the right for `married `, which makes it hard to
+spot on the output, as opposed to ` unmarried`.*
+
+To fix this specific problem, we can use the `str.strip()` method to strip off all leading
+and trailing white spaces (given no input into the method).
+
+#### Collapsing Data into Categories
+
+*Creating categories* out of our data is very useful for grouping data.
+
+As an example, let us create an `income_group` column from the `income` column in the
+`demographics` DataFrame. We can do this in two ways:
+
+1. `pd.qcut()` function from `pandas`.
+
+The `qcut()` method automatically divides our data based on its distribution into the
+number of categories we set in the `q` argument.
+
+In our example, we created the category names in the `group_names` list and fed it to the
+`labels` argument.
+
+```python
+  import pandas as pd
+  group_names = ['0-200K', '200K-500K', '500K+']
+  demographics['income_group'] = pd.qcut(demographics['household_income'], q=3, labels=group_names)
+
+  demographics[['income_group', 'household_income']]
+```
+
+```console
+        category  household_income
+  0    200K-500K  189243
+  1        500K+  778533
+```
+
+From our return values, we see that the first row misrepresents the actual income
+of the income group, as we did not instruct `qcut()` where our ranges lie.
+
+2. `pd.cut()` function from `pnadas`.
+
+Instead of using `pd.qcut()`, we can opt to use `pd.cut()`, which lets us define category
+cutoff ranges with the `bins` argument. It takes in a list of cutoff points for each
+category, with the final one being infinity represented with `np.inf`.
+
+```python
+  import numpy as np
+  import pandas as pd
+  ranges = [0, 200000, 500000, np.inf]
+  group_names = ['0-200K', '200K-500K', '500K+']
+  demographics['income_group'] = pd.cut(demographic['household_income'], bins=ranges, labels=group_names)
+
+  demographics[['income_group', 'household_income']]
+```
+
+```console
+        category  household_income
+  0       0-200K  189243
+  1        500K+  778533
+```
+
+This looks more correct now!
+
+The main difference between `pd.cut()` and `pd.qcut()` is:
+
+- `pd.cut()` creates **equispaced bins** but the frequency of samples is
+**unequal in each bin**
+- `pd.qcut()` creates **unequal size bins** but the frequency of samples is
+**equal in each bin**
+
+as explained [here](https://stackoverflow.com/questions/30211923/what-is-the-difference-between-pandas-qcut-and-pandas-cut).
+
+Sometimes, we may want to reduce the number of categories, ie. *map categories to fewer
+ones.*
+
+For example, assume we have a DataFrame `devices` that contains the operating system of
+different devices and contains some unique values in the `operating_system` column. As of
+now, `operating_system` is: `'Microsoft'`, `'MacOS'`, `'IOS'`, `'Android'`, `'Linux'`.
+We want to collapse the categories to become: `'DesktopOS'`, `'MobileOS'`.
+
+To do this, we can use the `.replace()` method. It takes in a dictionary that maps each
+existing category to the category name you desire (`mapping` in the code below).
+
+```python
+  mapping = {
+    'Microsoft': 'DesktopOS',
+    'MacOS': 'DesktopOS',
+    'Linux': 'DesktopOS',
+    'IOS': 'MobileOS',
+    'Android': 'MobileOS'
+  }
+  devices['operating_system'] = devices['operating_system'].replace(mapping)
+
+  devices['operating_system'].unique()
+```
+
+```console
+  array(['DesktopOS', 'MobileOS'], dtype=object)
+```
+
+After a quick print of the unique values in `operating_system`, we see that the mapping
+has been done!

@@ -443,3 +443,62 @@ NumPy's `NaN` object.
   4      Tan Ah Kaw               NaN
   5      Tansi Medo          99120934
 ```
+
+To test whether the column is corrected, we can write assert statements.
+
+```python
+  # assert phone number length is 8
+  assert phones['Phone Number'].str.len() == 8
+
+  # assert phone number does not contain +65
+  assert phones['Phone Number'].str.contains('+65') == False
+```
+
+*Remember, `assert` returns nothing if the condition passes. So no outputs = good!*
+
+#### Fixing Complicated Problems - Using Regular Expressions
+
+Sometimes, we are faced with more complicated problems that cannot be solved simply by
+applying methods. For example, how would we clean `phones`?
+
+```python
+  phones.head()
+```
+
+```console
+          Full Name      Phone Number
+  0        John Doe       +6581234567
+  1        Mary Sue              0001
+  2     Bart Dimple          +6502345
+  3       Joe Daddy     +65-8109-2475
+  4      Tan Ah Kaw      +65(80001000)
+  5      Tansi Medo          9912-0934
+```
+
+`phones` contain a range of symbols, and have inconsistent formats. Not to worry though,
+this is where **regular expressions** come in. They give us the ability to search for any
+pattern in text data.
+
+```python
+  # replace letters with nothing
+  phones['Phone Number'] = phones['Phone Number'].str.replace(r'\D+', '')
+  phones.head()
+```
+
+In our example, we attempt to extract only digits from the phone number column. (Further
+treatment is required, but this is the first step.) To do this, we use the `.str.replace()`
+method with the regex pattern we want to replace with an empty string. Notice the pattern
+fed into the method. This is essentially us telling Pandas to replace anything that is not
+a digit with nothing!
+
+```console
+          Full Name      Phone Number
+  0        John Doe          81234567
+  1        Mary Sue              0001
+  2     Bart Dimple           6502345
+  3       Joe Daddy        6581092475
+  4      Tan Ah Kaw          80001000
+  5      Tansi Medo          99120934
+```
+
+Feel free to read more about regular expressions!

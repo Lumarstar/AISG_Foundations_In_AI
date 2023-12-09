@@ -402,3 +402,44 @@ Let us see how this is done!
 
 #### Fixing Simple Problems - Phone Numbers
 
+Let us begin by removing `'+65'`. To do this, we use the `.str.replace()` method which takes
+in two values - the string being replaced (`'+65'`) and the string to replace it (an empty
+string, `''`).
+
+```python
+  phones['Phone Number'] = phones['Phone Number'].str.replace('+65', '')
+  phones
+```
+
+```console
+          Full Name      Phone Number
+  0        John Doe          81234567
+  1        Mary Sue          81000001
+  2     Bart Dimple          99102345
+  3       Joe Daddy          81092475
+  4      Tan Ah Kaw              2345
+  5      Tansi Medo          99120934
+```
+
+Finally, we are going to replace all phone numbers that are not 8 digits long with `NaN`. We
+can do this by chaining the `'Phone Number'` column with the `.str.len()` method, which
+returns the string length of each row in the column. We can then use the `.loc[]` method to
+index rows where `digits` are not 8, and replace the value of `'Phone Number'` with
+NumPy's `NaN` object.
+
+```python
+  import numpy as np
+  digits = phones['Phone Number'].str.len()
+  phones.loc[digits != 8, 'Phone Number'] = np.nan
+  phones
+```
+
+```console
+          Full Name      Phone Number
+  0        John Doe          81234567
+  1        Mary Sue          81000001
+  2     Bart Dimple          99102345
+  3       Joe Daddy          81092475
+  4      Tan Ah Kaw               NaN
+  5      Tansi Medo          99120934
+```

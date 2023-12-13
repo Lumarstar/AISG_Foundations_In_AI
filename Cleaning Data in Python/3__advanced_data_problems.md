@@ -197,8 +197,84 @@ Unfortunately, there is no clear-cut way to spot this inconsistency or to treat 
 Depending on the size of the dataset and suspected ambiguities, we can either:
 
 - convert these dates into `NA` and deal with them accordingly,
-- infer format by understanding data source (ie. context of data), or
-- infer format by understanding previous and subsequent data's formats in DataFrame.
+- infer format by understanding the data source (ie. context of data), or
+- infer format by understanding previous and subsequent data in DataFrame.
 
 In general, it is extremely helpful to properly understand where your data comes from
 before trying to treat it, as it will make making these decisions much easier.
+
+## Cross Field Validation
+
+### Motivation
+
+More often than not, our data would have been collected and merged from different data
+sources. A common challenge when merging data from different sources is data integrity, or
+more broadly making sure that our data is consistent and correct.
+
+### What Cross Field Validation is
+
+Cross field validation is the use of *multiple* fields in a dataset to sanity check data
+integrity.
+
+Let us take a look at an example. In the DataFrame `users`, information about the user ID,
+their age and their birthdays are stored.
+
+```python
+  users.head()
+```
+
+```console
+      user_id  Age    Birthday
+  0     32985   22  1998-03-02
+  1     94387   27  1993-12-04
+  2     34236   42  1978-11-24
+  3     12551   31  1989-01-03
+  4     55212   18  2002-07-02
+```
+
+We can, for example, make sure that the age and birthday columns are correct by subtracting
+the number of years between today's date and each birthday.
+
+To do this, we need to first make sure the `'Birthday'` column is converted to datetime with
+`pd.to_datetime()` function.
+
+```python
+  import pandas as pd
+  import datetime as dt
+
+  users['Birthday'] = pd.to_datetime(users['Birthday'])
+```
+
+We then create an object storing today's date using the datetime package's
+`dt.date.today()` function.
+
+```python
+  today = dt.date.today()
+```
+
+We then calculate the difference in years between today's date's year and the year of each
+birthday by using the `.dt.year` attribute of the user's Birthday column.
+
+```python
+  age_manual = today.year - users['Birthday'].dt.year
+```
+
+We then find instances where the calculated ages are equal to the actual age column in
+`users`. Lastly, we find and filter out the instances were we have inconsistencies through
+subsetting with brackets and the tilde symbol on the equality Series we created.
+
+```python
+  age_equ = age_manual == users['Age']
+
+  inconsistent_age = users[~age_equ]
+  consistent_age = users[age_equ]
+```
+
+### After catching inconsistencies
+
+So how should we deal with inconsistencies? Just like other data cleaning problems, the best
+solution requires us to have an in-depth understanding of our dataset. We can decide to:
+
+- drop inconsistent data
+- set it to missing and impute it
+- apply rules from domain knowledge

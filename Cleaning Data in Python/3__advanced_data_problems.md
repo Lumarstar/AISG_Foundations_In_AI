@@ -278,3 +278,5 @@ solution requires us to have an in-depth understanding of our dataset. We can de
 - drop inconsistent data
 - set it to missing and impute it
 - apply rules from domain knowledge
+
+But only take action after sufficient planning and understanding of your data.

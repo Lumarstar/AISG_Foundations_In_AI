@@ -280,3 +280,66 @@ solution requires us to have an in-depth understanding of our dataset. We can de
 - apply rules from domain knowledge
 
 But only take action after sufficient planning and understanding of your data.
+
+## Completeness (and Missing Data)
+
+### Context
+
+Missing data is one of the most common and most important data cleaning. It is when no data
+value is stored for a variable in an observation. It is most commonly represented as `NA` or
+`NaN`, but can take on arbitrary values like `0`, or `.`. It is commonly due to technical
+or human errors.
+
+### Example - Air Quality
+
+In this example, our DataFrame `airquality` contains temperature and CO2 measurements for
+different dates.
+
+```python
+  import pandas as pd
+
+  # assume data has already been imported and placed in airquality
+  print(airquality)
+```
+
+```console
+              Date  Temperature  CO2
+  987   20/04/2004         16.8  0.0
+ 2119   07/06/2004         18.7  0.8
+ 2451   20/06/2004        -40.0  NaN
+ 1984   01/06/2004         16.8  1.8
+ 8229   19/02/2005         16.8  1.2
+  ...      ...              ...  ...
+```
+
+We can see that the CO2 value in the third row is `NaN`. We can find rows with missing
+values by using the `.isna()` method, which returns `True` for missing values and `False`
+for complete values across all rows and columns.
+
+```python
+  airquality.isna()
+```
+
+```console
+         Date  Temperature    CO2
+  987   False        False  False
+ 2119   False        False  False
+ 2451   False        False   True
+ 1984   False        False  False
+ 8229   False        False  False
+  ...    ...          ...    ...  
+```
+
+We can also chain the `.isna()` method with the `.sum()` method, which returns a breakdown
+of missing values per column in our DataFrame.
+
+```python
+  airquality.isna().sum()
+```
+
+```console
+  Date             0
+  Temperature      0
+  CO2            366
+  dtype: int64
+```

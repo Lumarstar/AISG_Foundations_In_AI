@@ -290,6 +290,24 @@ value is stored for a variable in an observation. It is most commonly represente
 `NaN`, but can take on arbitrary values like `0`, or `.`. It is commonly due to technical
 or human errors.
 
+### Visualising Missing Values
+
+We can use the `missingno` package along with Matplotlib to create useful visualisations of
+our missing data.
+
+```python
+  import missingno as msno
+  import matplotlib.pyplot as plt
+```
+
+### Missingness Types
+
+There are a variety of types of missing data:
+
+1. Missing completely at random
+2. Missing at random
+3. Missing not at random
+
 ### Example - Air Quality
 
 In this example, our DataFrame `airquality` contains temperature and CO2 measurements for
@@ -343,3 +361,81 @@ of missing values per column in our DataFrame.
   CO2            366
   dtype: int64
 ```
+
+Notice that the CO2 column is the only column with missing values. Let's try to find out
+why by first visualising our missing values.
+
+```python
+  import missingno as msno
+  import matplotlib.pyplot as plt
+
+  # visualise missingness
+  msno.matrix(airquality)
+  plt.show()
+```
+
+`plt.show()` shows the matrix in the form of this image:
+
+<img width="1061" alt="image" src="https://github.com/Lumarstar/AISG_Foundations_In_AI/assets/63058663/cf220f79-e2e4-4ead-95ee-615e021fd187">
+
+The matrix essentially shows how missing values are distributed across a column. We see that
+missing CO2 values are randomly scattered throughout the column, but is that the case?
+
+To check that, we first isolate the rows of `airquality` with missing CO2 values in one
+DataFrame, and complete CO2 values in another.
+
+```python
+  missing = airquality[airquality['CO2'].isna()]
+  complete = airquality[~airquality['CO2'].isna()]
+```
+
+Then, we use the `.describe()` method on each of the created DataFrames.
+
+```python
+  complete.describe()
+```
+
+```console
+          Temperature          CO2
+  count   8991.000000  8991.000000
+  mean      18.317829     1.739584
+  std        8.832116     1.537580
+  min       -1.900000     0.000000
+  ...           ...          ...
+  max       44.600000    11.900000
+```
+
+```python
+  missing.describe()
+```
+
+```console
+          Temperature  CO2
+  count    366.000000  0.0
+  mean     -39.655738  NaN
+  std        5.988716  NaN
+  min      -49.000000  NaN
+  ...           ...    ...
+  max      -30.000000  NaN
+```
+
+We see that all missing values of CO2 occur at really low temperatures, with the
+mean temperature at -39 degrees, a minimum temperature of -49 degrees and a maximum
+temperature of -30 degrees. We can confirm this visually using the `missingno` package.
+
+We first sort the DataFrame by the temperature column. Then we input the sorted dataframe
+to the matrix function from msno.
+
+```python
+  sorted_airquality = airquality.sort_values(by='Temperature')
+  msno.matrix(sorted_airquality)
+  plt.show()
+```
+
+This leaves us with this matrix.
+
+<img width="779" alt="image" src="https://github.com/Lumarstar/AISG_Foundations_In_AI/assets/63058663/06ffdc79-6868-42bc-a6d7-5487ad48fa63">
+
+Notice how all the missing values (of CO2) are on the top? This is because values are sorted
+from smallest to largest by default. This essentially confirms that CO2 measurements are
+lost for really low temperatures. Might have been a sensor failure!

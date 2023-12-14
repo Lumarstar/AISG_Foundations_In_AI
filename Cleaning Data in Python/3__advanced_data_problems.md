@@ -304,9 +304,38 @@ our missing data.
 
 There are a variety of types of missing data:
 
-1. Missing completely at random
-2. Missing at random
-3. Missing not at random
+1. **Missing completely at random**
+
+When there is missing data completely due to randomness, and there is no systematic relationship between missing data and remaining values. Examples include data entry errors.
+
+2. **Missing at random**
+
+When there is a systematic relationship between missing data and other *observed* values! An
+example would be missing CO2 data for low temperatures only. (refer to our subsequent
+example)
+
+3. **Missing not at random**
+
+When there is a systematic relationship between missing data and *unobserved* values. For
+example, when it is really hot outside, the thermometer might stop working, so we do not
+have temperature measurements for days with high temperatures. However, we have no way to
+tell this just from looking at the data since we cannot see what the missing temperatures
+are.
+
+### Dealing with missing data
+
+Each missingness type (as discussed above) requires a specific approach and each type of
+approach has its drawbacks and positives! Maybe some experimentation would help :>
+
+**Simple Approaches**
+
+- Dropping Missing Data
+- Impute with statistical measures (mean, median, mode, etc.)
+
+**More complex approaches**
+
+- Imputing them using algorithms
+- Impute with machine learning models
 
 ### Example - Air Quality
 
@@ -438,4 +467,45 @@ This leaves us with this matrix.
 
 Notice how all the missing values (of CO2) are on the top? This is because values are sorted
 from smallest to largest by default. This essentially confirms that CO2 measurements are
-lost for really low temperatures. Might have been a sensor failure!
+lost for really low temperatures. Might have been a sensor failure! The data is therefore
+*missing at random*.
+
+In our example, we will look at the simple approaches (refer to the above section if you
+have no idea what I am talking about) to deal with missing data.
+
+We can drop missing values by using the `.dropna()` method, alongside the `subset` argument
+which lets us pick which column's missing values to drop.
+
+```python
+  airquality_dropped = airquality.dropna(subset=['CO2'])
+  airquality_dropped.head()
+```
+
+```console
+              Date  Temperature  CO2
+  0     05/03/2005          8.5  2.5
+  1     23/08/2004         21.8  0.0
+  2     18/02/2005          6.3  1.0
+  3     13/03/2005         19.9  0.1
+  4     02/04/2005         17.0  0.8
+```
+
+We can also replace the missing values of CO2 with the mean value of CO2 by using the
+`.fillna()` method (which in this case is 1.73).
+
+```python
+  co2_mean = airquality['CO2'].mean()
+  airquality_imputed = airquality.fillna({'CO2': co2_mean})
+  airquality_imputed.head()
+```
+
+```console
+              Date  Temperature  CO2
+  0     05/03/2005          8.5  2.500000
+  1     23/08/2004         21.8  0.000000
+  2     18/02/2005          6.3  1.000000
+  3     08/02/2005        -31.0  1.739584
+  4     13/03/2005         19.9  0.100000
+```
+
+`.fillna()` takes in a dictionary with columns as keys, and the imputed value as values.

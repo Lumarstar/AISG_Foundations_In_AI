@@ -173,6 +173,7 @@ residents from New York and California how likely they would move on a scale of 
   6          Calefernia
   7            New York
   8       New York City
+ ...            ...
 ```
 
 The `'state'` field was free text and contains *hundreds* of typos. Remapping them would

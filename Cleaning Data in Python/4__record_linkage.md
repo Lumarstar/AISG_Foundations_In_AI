@@ -216,3 +216,6 @@ we replace it with the correct state using the `.loc[]` method.
           if potential_match[1] >= 80:
               survey.loc[survey['state'] == potential_match[0], 'state'] = state
 ```
+
+## Generating Pairs
+

@@ -6,6 +6,10 @@ Record linkage attempts to join data sources that have similar fuzzy duplicate v
 (when values look similar but are not 100% identical), so that we end up with a final
 DataFrame with no duplicates by using string similarity.
 
+Our flow would look something like this:
+
+<img width="483" alt="image" src="https://github.com/Lumarstar/AISG_Foundations_In_AI/assets/63058663/1975e00e-5a9a-420d-aa5c-ea63e90a74df">
+
 ## Comparing Strings
 
 ### Minimum Edit Distance
@@ -373,3 +377,72 @@ rec-1373-org rec-4051-dup-0               0     1     1.0       0.0
              rec-802-dup-0                0     1     1.0       0.0
 rec-3540-org rec-470-dup-0                0     1     1.0       0.0
 ```
+
+## Linking DataFrames
+
+This is the last step in our workflow! We will be referring to the two DataFrames that we
+used in the previous section, `census_A` and `census_B`.
+
+We have already generated pairs between them, compared four of their columns (two for exact
+matches and two for string similarity alongside a 0.85 threshold), and found potential
+matches!
+
+```python
+  # import recordlinkage and generate full pairs
+  import recordlinkage
+  indexer = recordlinkage.Index()
+  indexer.block('state')
+  full_pairs = indexer.index(census_A, census_B)
+
+  # comparison step
+  compare_cl = recordlinkage.Compare()
+  compare_cl.exact('date_of_birth', 'date_of_birth', label='date_of_birth')
+  compare_cl.exact('state', 'state', label='state')
+  compare_cl.string('surname', 'surname', threshold=0.85, label='surname')
+  compare_cl.string('address_1', 'address_1', threshold=0.85, label='address_1')
+
+  # find matches
+  potential_matches = compare_cl.compute(full_pairs, census_A, census_B)
+```
+
+Our next step is to link the DataFrames.
+
+First, let us look closely at our potential matches. It is a multiindex DataFrame, where we
+have two index columns, `rec_id_1` and `rec_id_2`.
+
+```console
+                                  date_of_birth state surname address_1
+  rec_id_1     rec_id_2
+  rec-1070-org rec-561-dup-0                  0     1     0.0       0.0
+               rec-2642-dup-0                 0     1     0.0       0.0
+               rec-608-dup-0                  0     1     0.0       0.0
+  ...
+  rec-1631-org rec-4070-dup-0                 0     1     0.0       0.0
+               rec-4862-dup-0                 0     1     0.0       0.0
+               rec-629-dup-0                  0     1     0.0       0.0
+  ...
+```
+
+Our first index column `rec_id_1` stores indices from `census_A`. The second index column
+`rec_id_2` stores all possible indices from `census_B` for each row index of `census_A`.
+The columns of our potential matches are the columns we chose to link both DataFrames on,
+where the value is `1` for a match, and `0` otherwise.
+
+The first step in linking DataFrames is to isolate the potentially matching pairs such that
+we get pairs that we are (quite) sure are duplicates. We do this by subsetting the rows
+where the row sum is above a certain number of columns.
+
+```python
+  # in our case, we take a row sum greater than or equal to 3
+  matches = potential_matches[potential_matches.sum(axis=1) >= 3]
+  print(matches)
+```
+
+The output is row indices between `census_A` and `census_B` that are most likely duplicates.
+
+```console
+  
+```
+
+Our next step is to extract one of the index columns and subset its associated DataFrame
+to filter for duplicates.

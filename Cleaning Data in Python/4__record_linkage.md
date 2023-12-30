@@ -219,3 +219,157 @@ we replace it with the correct state using the `.loc[]` method.
 
 ## Generating Pairs
 
+### Motivation
+
+Sometimes, we want to combine data from separate DataFrames that are complete duplicates of
+each other but with different names. However, there may be data constraints, an absence of
+a common unique identifier between the DataFrames, different names, etc. which means a
+regular join or merge will not work in combining the two DataFrames.
+
+This is where record linkage comes in.
+
+### Record linkage
+
+Record linkage is the act of linking data from different sources regarding the same entity.
+Generally, we clean two or more DataFrames, generate pairs of potentially matching records,
+score these pairs according to string similarity and other similarity metrics, and link
+them.
+
+All of these steps can be achieved with the `recordlinkage` package!
+
+### Using `recordlinkage`
+
+We will use an example to illustrate using this package.
+
+We have two DataFrames, `census_A` and `census_B` containing data on individuals throughout
+states in the United States of America. We want to merge them while avoiding duplication
+using record linkage since they are collected manually and are prone to typos, and there
+are no consistent IDs between them.
+
+Both `census-A` and `census_B` have `rec_id`, `given_name`, `surname`, `date_of_birth`,
+`suburb`, `state` and `address_1` as their columns.
+
+#### Step 1 - Generating Pairs
+
+We first want to *generate pairs* between both DataFrames. Ideally, we want to generate all
+possible pairs between our DataFrames. But!! What if we had big DataFrames and ended up
+having to generate millions, if not billions, of pairs? It would not prove scalable and
+could seriously hamper development time.
+
+This is where *blocking* comes in. Pairs are created based on a matching column. In our
+example, that would be the `state` column, reducing the number of possible pairs.
+
+To do this, we first start by importing `recordlinkage`. We then use the
+`recordlinkage.Index()` function to create an indexing object. This essentially is an
+object we can use to generate pairs from our DataFrames. To generate pairs blocked on
+`state`, we use the `.block()` method, inputting `state` as the input. Once the indexer
+object has been initialised, we generate our pairs using the `.index()` method, which takes
+in two DataFrames.
+
+```python
+  # import recordlinkage
+  import recordlinkage
+
+  # create indexing object
+  indexer = recordlinkage.Index()
+
+  # generate pairs blocked on state
+  indexer.block('state')
+  pairs = indexer.index(census_A, census_B)
+```
+
+The resulting object is a pandas multiindex object containing pairs of row indices from both
+DataFrames. (which is a fancy way to say it is an array containing possible pairs of indices
+that makes it much easier to subset DataFrames on)
+
+```python
+  print(pairs)
+```
+
+```console
+  MultiIndex(levels=[['rec-1007-org', 'rec-1016-org', 'rec-1054-org', 'rec-1066-org',
+  'rec-1070-org', 'rec-1075-org', 'rec-1080-org', 'rec-110-org', 'rec-1146-org',
+  'rec-1157-org', 'rec-1165-org', 'rec-1185-org', 'rec-1234-org', 'rec-1271-org', 'rec-1280-org', . . . .
+  66, 14, 13, 18, 34, 39, 0, 16, 80, 50, 20, 69, 28, 25, 49, 77, 51, 85, 52, 63, 74, 61, 83, 91, 22, 26, 55, 84, 11, 81, 97, 56, 27, 48, 2, 64, 5, 17, 29, 60, 72, 47, 92, 12, 95, 15, 19, 57, 37, 70, 94]], names=['rec_id_1', 'rec_id_2'])
+```
+
+#### Step 2 - Compare the DataFrames
+
+Since we have already generated our pairs, it is time to find potential matches. We first
+start by creating a comparison object using the function `recordlinkage.compare()`. This
+is similar to the indexing object we created while generating pairs, but this one is
+responsible for assigning different comparison procedures for pairs.
+
+Should we want exact matches between the pairs, we use the `.exact()` method of the Compare
+object. It takes in the column name in question for each DataFrame and a `label` argument
+which lets us set the column name in the resulting DataFrame.
+
+Now, to compute string similarities (ie. not an exact match) between pairs of rows
+for columns that have fuzzy values, we use the `.string()` method, which also takes in the
+column names in question, the similarity cutoff point in the `threshold` argument which
+takes in a value between 0 and 1, and a `label` argument.
+
+Finally, to compute the matches, we use the `.compute()` function, which takes in the
+possible pairs, and the two DataFrames in question. 
+
+*Note that you need to always have the same order of DataFrames when inserting them as
+arguments when generating pairs, comparing between columns and computing comparisons.*
+
+```python
+  # generate the pairs
+  pairs = indexer.index(census_A, census_B)
+
+  # create a Compare object
+  compare_cl = recordlinkage.Compare()
+
+  # find exact matches for pairs of date_of_birth and state
+  compare_cl.exact('date_of_birth', 'date_of_birth', label='date_of_birth')
+  compare_cl.exact('state', 'state', label='state')
+
+  # find similar matches for pairs of surname and address_1 using string similarity
+  compare_cl.string('surname', 'surname', threshold=0.85, label='surname')
+  compare_cl.string('address_1', 'address_1', threshold=0.85, label='address_1')
+
+  # find matches
+  potential_matches = compare_cl.compute(pairs, census_A, census_B)
+```
+
+The output is a multiindex DataFrame, where the first index is the row index from the first
+DataFrame (`census_A`), and the second index is a list of all row indices in `census_B`. The
+columns are the columns being compared, with values being `1` for a match, and `0` for not a
+match.
+
+```python
+  print(potential_matches)
+```
+
+```console
+                                  date_of_birth state surname address_1
+  rec_id_1     rec_id_2
+  rec-1070-org rec-561-dup-0                  0     1     0.0       0.0
+               rec-2642-dup-0                 0     1     0.0       0.0
+               rec-608-dup-0                  0     1     0.0       0.0
+  ...
+  rec-1631-org rec-4070-dup-0                 0     1     0.0       0.0
+               rec-4862-dup-0                 0     1     0.0       0.0
+               rec-629-dup-0                  0     1     0.0       0.0
+  ...
+```
+
+To find potential matches, we just filter for rows where the sum of row values is higher
+than a certain threshold. In our context, that is higher or equal to 2.
+
+```python
+  potential_matches[potential_matches.sum(axis=1) >= 2]
+```
+
+```console
+                              date_of_birth state surname address_1
+rec_id_1     rec_id_2
+rec-4878-org rec-4878-dup-0               1     1     1.0       0.0
+rec-417-org  rec-2867-dup-0               0     1     0.0       1.0
+rec-3964-org rec-394-dup-0                0     1     1.0       0.0
+rec-1373-org rec-4051-dup-0               0     1     1.0       0.0
+             rec-802-dup-0                0     1     1.0       0.0
+rec-3540-org rec-470-dup-0                0     1     1.0       0.0
+```

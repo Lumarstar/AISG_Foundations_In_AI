@@ -25,3 +25,29 @@ using Python
 - Use string manipulation and pattern matching to deal with unstructured data
 
 ## Table of Contents
+
+### [Common Data Problems](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Cleaning%20Data%20in%20Python/1__common_data_problems.md)
+
+- [Why Clean Data?](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Cleaning%20Data%20in%20Python/1__common_data_problems.md#why-clean-data)
+- [Data Type Constraints](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Cleaning%20Data%20in%20Python/1__common_data_problems.md#data-type-constraints)
+- [Data Range Constraints](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Cleaning%20Data%20in%20Python/1__common_data_problems.md#data-range-constraints)
+- [Unique Constraints/Duplicate Values](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Cleaning%20Data%20in%20Python/1__common_data_problems.md#unique-constraintsduplicate-values)
+
+### [Text and Categorical Data Problems](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Cleaning%20Data%20in%20Python/2__text_and_categorical_data_problems.md)
+
+- [Membership Constraints](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Cleaning%20Data%20in%20Python/2__text_and_categorical_data_problems.md#categorical-variables)
+- [Categorical Variables](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Cleaning%20Data%20in%20Python/2__text_and_categorical_data_problems.md#categorical-variables)
+- [Cleaning Text Data](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Cleaning%20Data%20in%20Python/2__text_and_categorical_data_problems.md#cleaning-text-data)
+
+### [Advanced Data Problems](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Cleaning%20Data%20in%20Python/3__advanced_data_problems.md)
+
+- [Uniformity](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Cleaning%20Data%20in%20Python/3__advanced_data_problems.md#uniformity)
+- [Cross Field Validation](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Cleaning%20Data%20in%20Python/3__advanced_data_problems.md#cross-field-validation)
+- [Completeness (and Missing Data)](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Cleaning%20Data%20in%20Python/3__advanced_data_problems.md#completeness-and-missing-data)
+
+### [Record Linkage](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Cleaning%20Data%20in%20Python/4__record_linkage.md)
+
+- [Context](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Cleaning%20Data%20in%20Python/4__record_linkage.md#context)
+- [Comparing Strings](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Cleaning%20Data%20in%20Python/4__record_linkage.md#comparing-strings)
+- [Generating Pairs](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Cleaning%20Data%20in%20Python/4__record_linkage.md#generating-pairs)
+- [Linking DataFrames](https://github.com/Lumarstar/AISG_Foundations_In_AI/blob/main/Cleaning%20Data%20in%20Python/4__record_linkage.md#linking-dataframes)

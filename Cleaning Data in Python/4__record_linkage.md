@@ -477,7 +477,7 @@ column's name or its order (which in this case is 1.)
 
 ```python
   # get indices from census_B only
-  duplicate_rows = matches.index.get_level_values(1)
+  census_B_index = matches.index.get_level_values(1)
   print(census_B_index)
 ```
 

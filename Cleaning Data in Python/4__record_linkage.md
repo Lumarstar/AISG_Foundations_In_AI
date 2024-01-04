@@ -441,8 +441,68 @@ where the row sum is above a certain number of columns.
 The output is row indices between `census_A` and `census_B` that are most likely duplicates.
 
 ```console
-  
+                                  date_of_birth state surname address_1
+  ﻿rec_id_1     rec_id_2
+  rec-2404-org rec-2404-dup-0                 1     1     1.0       1.0
+  rec-4178-org rec-4178-dup-0                 1     1     1.0       1.0
+  rec-1054-org rec-1054-dup-0                 1     1     1.0       1.0
+  ...          ...                           ...   ...    ...       ...
+  rec-1234-org rec-1234-dup-0                 1     1     1.0       1.0
+  rec-1271-org rec-1271-dup-0                 1     1     1.0       1.0
 ```
 
 Our next step is to extract one of the index columns and subset its associated DataFrame
 to filter for duplicates.
+
+In our example, we choose the second index column, which represents the row indices of
+`census_B`. We want to extract those indices, and subset `census_B` on them to remove
+duplicates with `census_A` before appending them together.
+
+We can access a DataFrame's index using the `.index()` attribute. Since this is a multi
+index DataFrame, it returns a multi index object containing pairs of row indices from
+`census_A` and `census_B` respectively.
+
+```python
+  matches.index
+```
+
+```console
+  ﻿MultiIndex(levels=[['rec-1007-org', 'rec-1016-org', 'rec-1054-org', 'rec-1066-org',
+  'rec-1070-org', 'rec-1075-org', 'rec-1080-org', 'rec-110-org', ...
+```
+
+We want to extract all `census_B` indices, so we chain it with the `get_level_values` method
+which takes in the column index we want to extract its values. We can either input the index
+column's name or its order (which in this case is 1.)
+
+```python
+  # get indices from census_B only
+  duplicate_rows = matches.index.get_level_values(1)
+  print(census_B_index)
+```
+
+```console
+  ﻿Index(['rec-2404-dup-0', 'rec-4178-dup-0', 'rec-1054-dup-0', 'rec-4663-dup-0', 'rec-485-dup-0', 'rec-2950-dup-0', 'rec-1234-dup-0', 'rec-299-dup-0'])
+```
+
+To find the duplicates in `census_B`, we simply subset on all indices of `census_B` with the
+ones found through record linkage.
+
+```python
+  census_B_duplicates = census_B[census_B.index.isin(duplicate_rows)]
+```
+
+At this point, we can choose to examine them further for similarity with their duplicates
+in `census_A`, but if we are sure of our analysis, we can just find the non-duplicates by
+repeating the same line of code, except by adding `~` at the beginning of the subset.
+
+```python
+  census_B_new = census_B[~census_B.index.isin(duplicate_rows)]
+```
+
+Now that we have our non-duplicates, all we need is a simple append using the `.append()`
+method for DataFrames (in this case `census_A`), and we have our linked data!
+
+```python
+  full_census = census_A.append(census_B_new)
+```

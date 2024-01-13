@@ -1,4 +1,4 @@
-# Working with Time Series in Pandas
+<img width="300" alt="image" src="https://github.com/Lumarstar/AISG_Foundations_In_AI/assets/63058663/d8d5907c-12c1-4393-a00f-7f339274a810"># Working with Time Series in Pandas
 
 ## Using Dates and Times with Pandas
 
@@ -155,3 +155,26 @@ The function returns the sequence of dates as a `pd.DatetimeIndex` object - a se
 ```
 
 The elements are pandas `Timestamp` objects!
+
+```python
+  index[0]
+```
+
+```console
+  ﻿Timestamp ('2017-01-31 00:00:00', freq='M')
+```
+
+We can convert this index into a `PeriodIndex`, just like how we could convert between
+`Timestamp` and `Period` objects.
+
+```python
+  index.to_period()
+```
+
+```console
+  ﻿Period Index(['2017-01', '2017-02', '2017-03', '2017-04', ... '2017-11', '2017-12'],
+  dtype='period [M]', freq='M')
+```
+
+Now we can create a time series by setting the `DateTimeIndex` as the index of our
+DataFrame.

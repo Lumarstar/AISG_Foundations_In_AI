@@ -1,4 +1,4 @@
-<img width="300" alt="image" src="https://github.com/Lumarstar/AISG_Foundations_In_AI/assets/63058663/d8d5907c-12c1-4393-a00f-7f339274a810"># Working with Time Series in Pandas
+# Working with Time Series in Pandas
 
 ## Using Dates and Times with Pandas
 
@@ -178,3 +178,63 @@ We can convert this index into a `PeriodIndex`, just like how we could convert b
 
 Now we can create a time series by setting the `DateTimeIndex` as the index of our
 DataFrame.
+
+DataFrame columns containing dates will be assigned the `datetime64` datatype. (*ns* means
+nanoseconds.)
+
+```python
+  pd.DataFrame({'data': index}).info()
+```
+
+```console
+  ﻿RangeIndex: 12 entries, 0 to 11
+  Data columns (total 1 columns):
+  data    12 non-null datetime64[ns]
+  dtypes: datetime64[ns](1)
+```
+
+Let us now create 12 rows with two columns of random data to match the `DateTimeIndex` using
+`np.random.random()`. We also provide the dates to the DataFrame constructor (under `index`)
+and we have our first time series with 12 monthly timestamps!
+
+```python
+  data = np.random.random((size=12, 2))
+  pd.DataFrame(data=data, index=index).info()
+```
+
+```console
+  ﻿DatetimeIndex: 12 entries, 2017-01-31 to 2017-12-31
+  Freq: M
+  Data columns (total 2 columns):
+  0 12 non-null float64
+  1 12 non-null float64
+  dtypes: float64(2)
+```
+
+### Frequency alias and time information
+
+Pandas allow us to create and convert between many different frequencies. Here are the most
+important ones!
+
+| Period  | Alias |
+|---------|-------|
+| Hour    | H     |
+| Day     | D     |
+| Week    | W     |
+| Month   | M     |
+| Quarter | Q     |
+| Year    | Y     |
+
+Some may also be set to the beginning or end of the period, or use business instead of
+calendar periods.
+
+There are also numerous Timestamp (`pd.Timestamp()`) attributes!
+
+| Attribute                     |
+|-------------------------------|
+| .second, .minute, .hour       |
+| .day, .month, .quarter, .year |
+| .weekday                      |
+| .dayofweek                    |
+| .weekofyear                   |
+| .dayofyear                    |

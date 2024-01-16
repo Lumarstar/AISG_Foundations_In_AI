@@ -1,4 +1,4 @@
-<img width="97" alt="image" src="https://github.com/Lumarstar/AISG_Foundations_In_AI/assets/63058663/a09a0765-7dcc-411c-8717-6e8d3dc68246"><img width="261" alt="image" src="https://github.com/Lumarstar/AISG_Foundations_In_AI/assets/63058663/366bca57-391d-4568-b4fe-05e466821984"># Working with Time Series in Pandas
+# Working with Time Series in Pandas
 
 ## Using Dates and Times with Pandas
 

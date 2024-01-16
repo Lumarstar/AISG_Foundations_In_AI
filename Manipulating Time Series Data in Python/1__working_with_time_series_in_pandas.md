@@ -296,7 +296,12 @@ To convert the strings to the correct data type, we use the `.to_datetime()` fun
 ```
 
 ```console
-  
+  ﻿<class 'pandas.core.frame.DataFrame'>
+  RangeIndex: 504 entries, 0 to 503
+  Data columns (total 2 columns):
+  date 504 non-null datetime64[ns]
+  price 504 non-null float64
+  dtypes: datetime64[ns](1), float64(1)
 ```
 
 We can now set the typecasted column as the index using `.set_index()`.

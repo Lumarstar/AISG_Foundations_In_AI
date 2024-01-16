@@ -1,4 +1,4 @@
-# Working with Time Series in Pandas
+<img width="97" alt="image" src="https://github.com/Lumarstar/AISG_Foundations_In_AI/assets/63058663/a09a0765-7dcc-411c-8717-6e8d3dc68246"><img width="261" alt="image" src="https://github.com/Lumarstar/AISG_Foundations_In_AI/assets/63058663/366bca57-391d-4568-b4fe-05e466821984"># Working with Time Series in Pandas
 
 ## Using Dates and Times with Pandas
 
@@ -238,3 +238,212 @@ There are also numerous Timestamp (`pd.Timestamp()`) attributes!
 | .dayofweek                    |
 | .weekofyear                   |
 | .dayofyear                    |
+
+## Indexing and Resampling Time Series
+
+### Time Series Transformation
+
+We have many basic time series methods at our disposal to transform time series. These basic
+methods include:
+
+- Parsing string dates and converting them into `datetime64` data type
+- selecting and slicing for specific subperiods of the time series
+- setting or changing the `DateTimeIndex` frequencies.
+  - upsampling: increasing the time-frequency. requires generating more data.
+  - downsampling: decreasing the time-frequency. requires aggregating the data
+
+### Example - Google Stock Prices
+
+We don't have access to the source of the data here, but our data source supposedly has two
+years worth of daily Google stock prices.
+
+```python
+  import pandas as pd
+  google = pd.read_csv('google.csv')
+  google.info()
+```
+
+```console
+  ﻿<class 'pandas.core.frame.DataFrame'>
+  RangeIndex: 504 entries, 0 to 503 Data columns (total 2 columns):
+  date 584 non-null object
+  price 504 non-null float64
+  dtypes: float64(1), object(1)
+```
+
+Date data in real life are often of type `object`. Strings. We see this in our example here!
+Our `date` column is of data type `object`. Yet, when we print a few rows of the data, we
+see it contains dates.
+
+```python
+  google.head()
+```
+
+```console
+  ﻿        date  price
+  0 2015-01-02 524.81
+  1 2015-01-05 513.87
+  2 2015-01-06 501.96
+  3 2015-01-07 501.10
+  4 2015-01-08 502.68
+```
+
+To convert the strings to the correct data type, we use the `.to_datetime()` function.
+
+```python
+  google.date = pd.to_datetime(google.date)
+  google.info()
+```
+
+```console
+  
+```
+
+We can now set the typecasted column as the index using `.set_index()`.
+
+```python
+  google.set_index('date', inplace=True)
+  google.info()
+```
+
+```console
+  <class 'pandas.core.frame.DataFrame'>
+  DatetimeIndex: 504 entries, 2015-01-02 to 2016-12-30
+  Data columns (total 1 columns):
+  price 504 non-null float64
+  dtypes: float64(1)
+```
+
+The resulting `DateTimeIndex` lets us treat the entire DataFrame as time series data!
+
+If we plot the stock price, it shows that Google has been doing well. More importantly, it
+also shows that with a DateTimeIndex, pandas automatically creates reasonably spaced date
+labels for the x-axis!
+
+```python
+  google.price.plot(title='Google Stock Price')
+  plt.tight_layout()
+  plt.show()
+```
+
+<img width="487" alt="image" src="https://github.com/Lumarstar/AISG_Foundations_In_AI/assets/63058663/799e05bf-b142-4f17-8d25-ccb08854eae8">
+
+#### Partial String Indexing
+
+To select subsets of our time series, we can use strings that represent a complete date or
+relevant parts of a date. This is what we call *partial string indexing*.
+
+If we pass a string representing a year, pandas will return all dates within this year.
+
+```python
+  google['2015'].info()
+```
+
+```console
+  ﻿DatetimeIndex: 252 entries, 2015-01-02 to 2015-12-31
+  Data columns (total 1 columns):
+  price     252 non-null float64
+  dtypes: float64(1)
+```
+
+If we pass a slice that starts with one month and ends at another, we get all dates within
+that range.
+
+```python
+  google['2015-3':'2016-2'].info()    # date slicing includes both endpoints
+```
+
+```console
+  ﻿DatetimeIndex: 252 entries, 2015-03-02 to 2016-02-29
+  Data columns (total 1 columns):
+  price252     non-null float64
+  dtypes: float64(1)
+```
+
+*We just need to note that the date range will be inclusive of the end dates, which is
+different from other intervals in Python (like list slicing).*
+
+We can also use `.loc[]` with a complete date and a column label to select a specific stock
+price.
+
+```python
+  google.loc['2016-6-1', 'price']    # use full date with .loc[]
+```
+
+```console
+  734.15
+```
+
+#### Setting frequencies
+
+In our example, our DateTimeIndex did not have frequency information. We can (manually) set
+it using `.asfreq()`.
+
+```python
+  google.asfreq('D').info()    # we set to calendar day frequency
+```
+
+```console
+  ﻿DatetimeIndex: 729 entries, 2015-01-02 to 2016-12-30
+  Freq: D
+  Data columns (total 1 columns):
+  price   504 non-null float64
+  dtypes: float64(1)
+```
+
+As a result of us using the alias 'D' to set the frequency as calendar day frequency, our
+DateTimeIndex now contains all the calendar dates between the two dates stated, even on all
+the days where stock was not bought or sold. (*This sounds like upsampling is going to
+happen... hmmm*)
+
+These new dates have missing values. As we suspected before, this is what we call
+*upsampling*, since the new DataFrame is of higher frequency than the original version.
+We can verify that there is missing data by printing the first few rows of the DataFrame.
+
+```python
+  google.asfreq('D').head()
+```
+
+```console
+             ﻿price
+date
+2015-01-02  524.81
+2015-01-03  NaN
+2015-01-04  NaN
+2015-01-05  513.87
+2015-01-06  501.96
+```
+
+We can also convert the `DateTimeIndex` to business day frequency using `.asfreq('B')`. Yes,
+the alias for business day frequency is 'B'.
+
+```python
+  google = google.asfreq('B')
+  google.info()
+```
+
+```console
+  ﻿DatetimeIndex: 521 entries, 2015-01-02 to 2016-12-30
+  Freq: B
+  Data columns (total 1 columns):
+  price    504 non-null float64
+  dtypes: float64(1)
+```
+
+A smaller number of additional dates are created!
+
+Additionally, we can use the `.isnull()` method to select the missing values and check which
+dates are considered business days but have no stock prices because no stocks were traded.
+
+```python
+  google[google.price.isnull()]    # select all missing `price` values
+```
+
+```console
+          ﻿price
+date
+2015-01-19  NaN
+2015-02-16  NaN
+2016-11-24  NaN
+2016-12-26  NaN
+```

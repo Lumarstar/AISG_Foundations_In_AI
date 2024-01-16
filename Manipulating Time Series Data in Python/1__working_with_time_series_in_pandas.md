@@ -410,13 +410,13 @@ We can verify that there is missing data by printing the first few rows of the D
 ```
 
 ```console
-             ﻿price
-date
-2015-01-02  524.81
-2015-01-03  NaN
-2015-01-04  NaN
-2015-01-05  513.87
-2015-01-06  501.96
+               ﻿price
+  date
+  2015-01-02  524.81
+  2015-01-03  NaN
+  2015-01-04  NaN
+  2015-01-05  513.87
+  2015-01-06  501.96
 ```
 
 We can also convert the `DateTimeIndex` to business day frequency using `.asfreq('B')`. Yes,
@@ -445,10 +445,10 @@ dates are considered business days but have no stock prices because no stocks we
 ```
 
 ```console
-          ﻿price
-date
-2015-01-19  NaN
-2015-02-16  NaN
-2016-11-24  NaN
-2016-12-26  NaN
+            ﻿price
+  date
+  2015-01-19  NaN
+  2015-02-16  NaN
+  2016-11-24  NaN
+  2016-12-26  NaN
 ```
